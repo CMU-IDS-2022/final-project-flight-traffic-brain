@@ -9,8 +9,6 @@ A short summary (3-4 paragraphs, about one page) of the data science problem you
 Each member of your group should submit the URL pointing to this document on your github repo.
 
 
-
-# Description
 ## Overall Topic 
 Flight Traffic Brain
 ## Questions to Ask ##
