@@ -16,7 +16,7 @@ Update towards the end of the project.
 ### Proposal
 
 - [ ] The URL at the top of this readme needs to point to your application online. It should also list the names of the team members.
-- [ ] A completed [proposal](Proposal.md). Each student should submit the URL that points to this file in their github repo on Canvas.
+- [x] A completed [proposal](Proposal.md). Each student should submit the URL that points to this file in their github repo on Canvas.
 
 ### Sketches
 
