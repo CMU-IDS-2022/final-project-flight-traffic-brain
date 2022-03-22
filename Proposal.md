@@ -4,13 +4,12 @@
 
 **GitHub Repo URL**: https://github.com/CMU-IDS-2022/final-project-flight-traffic-brain
 
-A short summary (3-4 paragraphs, about one page) of the data science problem you are addressing and what your solution will address. Feel free to include a figure or sketch to illustrate your project.
-
-Each member of your group should submit the URL pointing to this document on your github repo.
-
 
 ## Overall Topic 
 Flight Traffic Brain
+
+## Track ##
+Interactive Visualization/Application 
 ## Questions to Ask ##
 **In this project we want to:**
 1) Help airports better manage airlines and control airline traffic;
