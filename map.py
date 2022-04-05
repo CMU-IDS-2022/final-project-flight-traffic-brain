@@ -1,6 +1,6 @@
 import altair as alt
 from vega_datasets import data
-from airdata import AirData
+import streamlit as st
 
 
 # Adapt from: https://altair-viz.github.io/gallery/airport_connections.html
@@ -11,11 +11,6 @@ def get_static_data():
     flights_airport = data.flights_airport.url
     states = alt.topo_feature(data.us_10m.url, feature="states")
     return airports, flights_airport, states
-
-def get_airdata():
-    # Get real-time flight data
-    ad = AirData()
-    return ad
 
 
 def mouse_selection():
@@ -92,15 +87,16 @@ def init_flights(flights):
     )
     return points
 
-def create_map():
+@st.cache
+def create_map(flight_df):
+    '''
+    flight_df: real time flight dataframe from AirData
+    '''
+
     # Prepare data
     airports, flights_airport, states = get_static_data()
-    ad = get_airdata()
     lookup_data = lookup(airports)
     select_city = mouse_selection()
-
-    # Get real time flight data
-    flight_df = ad.get_flights_df()    
 
     
     # The map consists of background US map, connections between airports, 

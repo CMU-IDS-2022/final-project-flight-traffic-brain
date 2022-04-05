@@ -3,6 +3,9 @@ import pandas as pd
 
 
 class AirData:
+    '''
+    This is a wrapper class to the FlightRadarAPI.
+    '''
     def __init__(self) -> None:
         self.fr_api = FlightRadar24API()
         flights_all = self.fr_api.get_flights()
