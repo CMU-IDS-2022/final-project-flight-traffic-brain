@@ -1,6 +1,6 @@
 # CMU Interactive Data Science Final Project
 
-* **Online URL**: TODO
+* **Online URL**: https://share.streamlit.io/cmu-ids-2022/final-project-flight-traffic-brain/main
 * **Team members**:
   * Contact person: shutingf@andrew.cmu.edu
   * yunxing@andrew.cmu.edu
