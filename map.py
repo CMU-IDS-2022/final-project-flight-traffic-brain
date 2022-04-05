@@ -1,4 +1,3 @@
-from turtle import filling
 import altair as alt
 from vega_datasets import data
 from airdata import AirData
