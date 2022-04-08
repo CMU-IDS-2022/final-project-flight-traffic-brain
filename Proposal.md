@@ -28,7 +28,7 @@ Interactive Visualization/Application
 
 ## Data Processing
 
-Our data srouces are from [FlightRadarAPI](https://github.com/JeanExtreme002/FlightRadarAPI) and a [Kaggle Dataset] (https://www.kaggle.com/datasets/zernach/2018-airplane-flights) about flight prices from 2018.
+Our data srouces are from [FlightRadarAPI](https://github.com/JeanExtreme002/FlightRadarAPI) and a [Kaggle Dataset](https://www.kaggle.com/datasets/zernach/2018-airplane-flights) about flight prices from 2018.
 
 FlightRadarAPI provides us an API to retrieve real-time air traffic data, 
 including airlines list, flights list, and information regarding a flight such
