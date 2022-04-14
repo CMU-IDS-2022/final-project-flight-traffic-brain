@@ -79,13 +79,32 @@ def init_airports(flights_airport, lookup_data, select_city):
 
 
 def init_flights(flights):
+    # brush = alt.selection(type='single') 
+    # Note: interval selection directly on map is not feasible: https://github.com/altair-viz/altair/issues/1232
+    interval = alt.selection(type='interval')
+    # change scatter point size interactively?
+    scatter = alt.Chart(flights).mark_point(size=2.0).encode(
+        alt.X("latitude", scale=alt.Scale(zero=False)),
+        alt.Y("longitude", scale=alt.Scale(zero=False)),
+        color = alt.condition(interval, alt.value("purple"), alt.value("grey")),
+        opacity = alt.condition(interval, alt.value(1), alt.value(0.2))
+    ).add_selection(interval)
+
+    hist = alt.Chart(flights).mark_bar(tooltip=True
+            ).encode(
+                    alt.X("ground_speed", bin=True),
+                    alt.Y(aggregate="count", type='quantitative')
+            ).transform_filter(interval)
+
+
     points = alt.Chart(flights).mark_square().encode(
         latitude="latitude:Q",
         longitude="longitude:Q",
         tooltip=["number:N", "origin_airport_iata:N", "destination_airport_iata:N"],
-        color=alt.value('purple')
+        color=alt.condition(interval, alt.value("red"), alt.value("grey"))
     )
-    return points
+    # todo: connect brush with extra flight information to display...
+    return points, scatter, hist
 
 @st.cache
 def create_map(flight_df):
@@ -100,12 +119,14 @@ def create_map(flight_df):
 
     
     # The map consists of background US map, connections between airports, 
-    # , airport points, and flight points
+    # airport points, and flight points
     background = init_background(states)
     connections = init_connections(flights_airport, lookup_data, select_city)
     airport_pts = init_airports(flights_airport, lookup_data, select_city)
-    flights_pts = init_flights(flight_df)
+    flights_pts, scatter, hist = init_flights(flight_df)
 
-    map_airport = (background + connections + airport_pts + flights_pts).configure_view(stroke=None)
+    map_view = alt.layer(background, connections, airport_pts, flights_pts)
+    map_stat_view = alt.hconcat(scatter, hist)
+    map_airport = alt.vconcat(map_view, map_stat_view).configure_view(stroke=None)
     return map_airport
 

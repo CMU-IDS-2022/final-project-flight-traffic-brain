@@ -36,3 +36,37 @@ class AirData:
     def get_flight_details(self, flight_id):
         return self.fr_api.get_flight_details(flight_id)
 
+    def add_time_to_df(self, flights_df):
+        # Could take about 3 - 5 minutes
+        flights_ids = flights_df['id']
+        scheduled_depart = []
+        scheduled_arrive = []
+        real_depart = []
+        real_arrive = []
+        estimated_depart = []
+        estimated_arrive = []
+        eta = []
+
+        for fid in flights_ids:
+            detail = self.get_flight_details(fid)
+            time_info = detail['time']
+            
+            scheduled_depart.append(time_info['scheduled']['departure'])
+            scheduled_arrive.append(time_info['scheduled']['arrival'])
+            real_depart.append(time_info['real']['departure'])
+            real_arrive.append(time_info['real']['arrival'])
+            estimated_depart.append(time_info['estimated']['departure'])
+            estimated_arrive.append(time_info['estimated']['arrival'])
+            eta.append(time_info['other']['eta'])
+
+        flights_df['scheduled_depart'] = scheduled_depart
+        flights_df['scheduled_arrive'] = scheduled_arrive
+        flights_df['real_depart'] = real_depart
+        flights_df['real_arrive'] = real_arrive
+        flights_df['estimated_depart'] = estimated_depart
+        flights_df['estimated_arrive'] = estimated_arrive
+        flights_df['eta'] = eta
+
+        return flights_df
+
+
