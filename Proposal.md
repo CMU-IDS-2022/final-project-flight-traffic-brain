@@ -107,7 +107,13 @@ The last two sketches at the bottom compare the average delay time of different 
 ### Flight Price Prediction
 
 ![Sketch price 1](sketch/price-prediction-sketch_1.png)
+
+We allow users to select some basic information like time and destination, and predict a price range accordingly. We would visualize the price and interact it’s location on the overall price histogram.
+
 ![Sketch price 2](sketch/price-prediction-sketch_2.png)
+
+We enable users to select the origin and destination on the US map and generate a ranked(ascendingly rank by price) list of airline information.
+
 ![Sketch price 3](sketch/price-prediction-sketch_3.png)
 ![Sketch price 4](sketch/price-prediction-sketch_4.png)
 
