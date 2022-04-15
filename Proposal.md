@@ -61,7 +61,10 @@ Below is an example of such dataframe.
 [207 rows x 19 columns]
 ```
 
-TODO: kaggle dataset...
+We also processed data for the Kaggle dataset as follows.
+The original raw dataframe looks as follows.
+![Raw data kaggle](sketch/price-prediction-raw_dataframe.png)
+
 
 ## System design
 
@@ -72,10 +75,10 @@ TODO: kaggle dataset...
 
 ### Flight Price Prediction
 
-![Sketch 1](./price-prediction-sketch_1.png)
-![Sketch 2](./price-prediction-sketch_2.png)
-![Sketch 3](./price-prediction-sketch_3.png)
-![Sketch 4](./price-prediction-sketch_4.png)
+![Sketch 1](sketch/price-prediction-sketch_1.png)
+![Sketch 2](sketch/price-prediction-sketch_2.png)
+![Sketch 3](sketch/price-prediction-sketch_3.png)
+![Sketch 4](sketch/price-prediction-sketch_4.png)
 
 		
 ## Specifics ##
