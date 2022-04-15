@@ -65,6 +65,18 @@ TODO: kaggle dataset...
 
 ## System design
 
+### Flight Map
+
+
+### Flight Delay Visual Analysis
+
+### Flight Price Prediction
+
+![Sketch 1](./price-prediction-sketch_1.png)
+![Sketch 2](./price-prediction-sketch_2.png)
+![Sketch 3](./price-prediction-sketch_3.png)
+![Sketch 4](./price-prediction-sketch_4.png)
+
 		
 ## Specifics ##
 Nowadays, air traffic control has become a complicated task as there are more and more flights and airlines. It becomes harder for the airports and air traffic control specialists to manage those flights coming from different locations in the world. Because of the dependencies between flights, a delay in one can cause delays in other flights if they are not properly managed. An interactive data science solution can help alleviate this problem. A real-time map of flights with interactive information such as speed and altitude can help the specialists to make better decisions. Meanwhile, an interactive network graph that shows the connections between airports and flights can also improve the handling of dependencies among the traffic.
