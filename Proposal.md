@@ -92,6 +92,13 @@ The resulting dataset include 10000 observations with 118 columns.
 
 ![Sketch delay](sketch/Flight_Delay_Analysis_Sketch.jpg)
 
+Sketch set 1:
+The first two plot graphs above explore the changes of average delay time of all flights at different times in a day. The users can filter the data by using the drop-down UI components at the top to select the specific origin airport, departure airport and airline. The users can then see how the average delay time change based on the different scheduled departure time (left sketch) and the different scheduled arrival time (right sketch) of a day.
+
+Sketch set 2:
+The last two sketches at the bottom compare the average delay time of different airlines in the United States. The users can filter the data by using the drop-down UI components at the top to select the specific origin airport and the departure airport. The left sketch uses a bar graph to visualize the differences of average delay time between different airlines. The right sketch uses a stripplot graph to visualize the punctuality and delay of all flights of different airlines.
+
+
 ### Flight Price Prediction
 
 ![Sketch price 1](sketch/price-prediction-sketch_1.png)
