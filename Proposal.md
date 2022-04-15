@@ -63,7 +63,23 @@ Below is an example of such dataframe.
 
 We also processed data for the Kaggle dataset as follows.
 The original raw dataframe looks as follows.
-![Raw data kaggle](sketch/price-prediction-raw_dataframe.png)
+![Raw data price](sketch/price-prediction-raw_dataframe.png)
+
+Then, we perform data cleaning and processing as follows:
+
+* Take a random sample of 10000 observations
+* Only keep the following variables: 
+	- PricePerTicket, Miles, NumTicketsOrdered, Quarter, OriginWac, DestWac, AirlineCompany
+* Encode OriginWac (51 unique values)  and DestWac (50 unique values) into actual state names, then conduct OneHot Encoding 
+* Conduct OneHot Encoding on selected categorical features including Quarter (4 unique values), AirlineCompany (11 unique values)
+* Given the different scales of numerical features, we take log of PricePerTicket and Miles
+
+The resulting dataset include 10000 observations with 118 columns.
+* 1 target variable: log_price
+* 2 numerical features: log_miles and NumTicketsOrdered
+* 115 dummy variables 
+![Cleaned data price](sketch/price-prediction-cleaned_dataframe.png)
+
 
 
 ## System design
