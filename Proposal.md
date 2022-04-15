@@ -86,15 +86,18 @@ The resulting dataset include 10000 observations with 118 columns.
 
 ### Flight Map
 
+![Sketch map](sketch/map_flights.jpg)
 
 ### Flight Delay Visual Analysis
 
+![Sketch delay](sketch/Flight_Delay_Analysis_Sketch.jpg)
+
 ### Flight Price Prediction
 
-![Sketch 1](sketch/price-prediction-sketch_1.png)
-![Sketch 2](sketch/price-prediction-sketch_2.png)
-![Sketch 3](sketch/price-prediction-sketch_3.png)
-![Sketch 4](sketch/price-prediction-sketch_4.png)
+![Sketch price 1](sketch/price-prediction-sketch_1.png)
+![Sketch price 2](sketch/price-prediction-sketch_2.png)
+![Sketch price 3](sketch/price-prediction-sketch_3.png)
+![Sketch price 4](sketch/price-prediction-sketch_4.png)
 
 		
 ## Specifics ##
