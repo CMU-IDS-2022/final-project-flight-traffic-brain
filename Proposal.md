@@ -88,6 +88,11 @@ The resulting dataset include 10000 observations with 118 columns.
 
 ![Sketch map](sketch/map_flights.jpg)
 
+The real-time map of flights will contain the current flights and flights just landed in the US. In the map, we also
+show connections between airports and flights when users drag their mouse over the flight. Under the map,
+we display using scatter plots and histogram relevant information such as longtitude/latitude, speed and altitude.
+The scatter plots and histogram will be linked together and also interact with the map.
+
 ### Flight Delay Visual Analysis
 
 ![Sketch delay](sketch/Flight_Delay_Analysis_Sketch.jpg)
