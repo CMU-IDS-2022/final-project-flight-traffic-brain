@@ -41,13 +41,10 @@ col3.metric("Scheduled arrival time", parse_time(option_time['scheduled']['arriv
 col4.metric("Actual arrival time", parse_time(option_time['real']['arrival']))
 
 
-# details['time']['scheduled']['arrival']
-# value = datetime.datetime.fromtimestamp(temp)
-# value.strftime('%Y-%m-%d %H:%M:%S')
+# Add longtitude/latitude option for airport, and also add heading for flights
 
 
-# Add a most delayed visualization (red flag), also shown in network graph?
-
-# Add aircraft, speed, scheduled time...
+# Note that some flights are not displayed due to... so the number of routes
+# may appear larger than...
 
 
