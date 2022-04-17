@@ -61,9 +61,61 @@ Below is an example of such dataframe.
 [207 rows x 19 columns]
 ```
 
-TODO: kaggle dataset...
+We also processed data for the Kaggle dataset as follows.
+The original raw dataframe looks as follows.
+![Raw data price](sketch/price-prediction-raw_dataframe.png)
+
+Then, we perform data cleaning and processing as follows:
+
+* Take a random sample of 10000 observations
+* Only keep the following variables: 
+	- PricePerTicket, Miles, NumTicketsOrdered, Quarter, OriginWac, DestWac, AirlineCompany
+* Encode OriginWac (51 unique values)  and DestWac (50 unique values) into actual state names, then conduct OneHot Encoding 
+* Conduct OneHot Encoding on selected categorical features including Quarter (4 unique values), AirlineCompany (11 unique values)
+* Given the different scales of numerical features, we take log of PricePerTicket and Miles
+
+The resulting dataset include 10000 observations with 118 columns.
+* 1 target variable: log_price
+* 2 numerical features: log_miles and NumTicketsOrdered
+* 115 dummy variables 
+![Cleaned data price](sketch/price-prediction-cleaned_dataframe.png)
+
+
 
 ## System design
+
+### Flight Map
+
+![Sketch map](sketch/map_flights.jpg)
+
+The real-time map of flights will contain the current flights and flights just landed in the US. In the map, we also
+show connections between airports and flights when users drag their mouse over the flight. Under the map,
+we display using scatter plots and histogram relevant information such as longtitude/latitude, speed and altitude.
+The scatter plots and histogram will be linked together and also interact with the map.
+
+### Flight Delay Visual Analysis
+
+![Sketch delay](sketch/Flight_Delay_Analysis_Sketch.jpg)
+
+Sketch set 1:
+The first two plot graphs above explore the changes of average delay time of all flights at different times in a day. The users can filter the data by using the drop-down UI components at the top to select the specific origin airport, departure airport and airline. The users can then see how the average delay time change based on the different scheduled departure time (left sketch) and the different scheduled arrival time (right sketch) of a day.
+
+Sketch set 2:
+The last two sketches at the bottom compare the average delay time of different airlines in the United States. The users can filter the data by using the drop-down UI components at the top to select the specific origin airport and the departure airport. The left sketch uses a bar graph to visualize the differences of average delay time between different airlines. The right sketch uses a stripplot graph to visualize the punctuality and delay of all flights of different airlines.
+
+
+### Flight Price Prediction
+
+![Sketch price 1](sketch/price-prediction-sketch_1.png)
+
+We allow users to select some basic information like time and destination, and predict a price range accordingly. We would visualize the price and interact it’s location on the overall price histogram.
+
+![Sketch price 2](sketch/price-prediction-sketch_2.png)
+
+We enable users to select the origin and destination on the US map and generate a ranked(ascendingly rank by price) list of airline information.
+
+![Sketch price 3](sketch/price-prediction-sketch_3.png)
+![Sketch price 4](sketch/price-prediction-sketch_4.png)
 
 		
 ## Specifics ##
