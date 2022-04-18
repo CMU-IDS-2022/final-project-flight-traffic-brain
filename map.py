@@ -100,7 +100,7 @@ def init_airport_connect_flight(flight_df, lookup_data, select_airport):
     )
     return airports_to
 
-def init_airports(flight_df, lookup_data, select_city):
+def init_airports(flight_df, lookup_data, select_city, interval):
 
     airport_df = flight_df[["origin_airport_iata", "destination_airport_iata"]]
 
@@ -109,6 +109,7 @@ def init_airports(flight_df, lookup_data, select_city):
         longitude="port_longitude:Q",
         size=alt.Size("dest_routes:Q", scale=alt.Scale(range=[100,400]), legend=None),
         order=alt.Order("dest_routes:Q", sort="descending"),
+        color=alt.condition(interval, alt.value("blue"), alt.value("grey")),
         tooltip=["destination_airport_iata:N", "dest_routes:Q"]
     ).transform_aggregate(
         dest_routes="count()",
@@ -125,22 +126,22 @@ def init_airports(flight_df, lookup_data, select_city):
     return points
 
 
-def init_flights(flight_df, select_flight):
+def init_flights(flight_df, select_flight, interval):
     # brush = alt.selection(type='single') 
     # Note: interval selection directly on map is not feasible: https://github.com/altair-viz/altair/issues/1232
-    interval = alt.selection(type='interval')
-    scatter = alt.Chart(flight_df).mark_point(size=2.0).encode(
-        alt.X("latitude", scale=alt.Scale(zero=False)),
-        alt.Y("longitude", scale=alt.Scale(zero=False)),
-        color = alt.condition(interval, alt.value("purple"), alt.value("grey")),
-        opacity = alt.condition(interval, alt.value(1), alt.value(0.2))
-    ).add_selection(interval)
+    # interval = alt.selection(type='interval')
+    # scatter = alt.Chart(flight_df).mark_point(size=2.0).encode(
+    #     alt.X("latitude", scale=alt.Scale(zero=False)),
+    #     alt.Y("longitude", scale=alt.Scale(zero=False)),
+    #     color = alt.condition(interval, alt.value("purple"), alt.value("grey")),
+    #     opacity = alt.condition(interval, alt.value(1), alt.value(0.2))
+    # ).add_selection(interval)
 
-    hist = alt.Chart(flight_df).mark_bar(tooltip=True
-            ).encode(
-                    alt.X("ground_speed", bin=True),
-                    alt.Y(aggregate="count", type='quantitative')
-            ).transform_filter(interval)
+    # hist = alt.Chart(flight_df).mark_bar(tooltip=True
+    #         ).encode(
+    #                 alt.X(flight_field, bin=True),
+    #                 alt.Y(aggregate="count", type='quantitative')
+    #         ).transform_filter(interval)
 
 
     points = alt.Chart(flight_df).mark_square().encode(
@@ -150,10 +151,50 @@ def init_flights(flight_df, select_flight):
         color=alt.condition(interval, alt.value("red"), alt.value("grey"))
     ).add_selection(select_flight)
     # todo: connect brush with extra flight information to display...
-    return points, scatter, hist
+    # return points, scatter, hist
+    return points
 
-@st.cache
-def create_map(flight_df):
+
+def init_scatter_and_hist(flight_df, field, to_show, lookup_data):
+    if to_show == "flight":
+        interval = alt.selection(type='interval')
+        scatter = alt.Chart(flight_df).mark_point(size=2.0).encode(
+            alt.X("latitude", scale=alt.Scale(zero=False)),
+            alt.Y("longitude", scale=alt.Scale(zero=False)),
+            color = alt.condition(interval, alt.value("purple"), alt.value("grey")),
+            opacity = alt.condition(interval, alt.value(1), alt.value(0.2))
+        ).add_selection(interval)
+        hist = alt.Chart(flight_df).mark_bar(tooltip=True
+                ).encode(
+                        alt.X(field, bin=True),
+                        alt.Y(aggregate="count", type='quantitative')
+                ).transform_filter(interval)
+    else: # "airport"
+        interval = alt.selection(type='interval', empty='none')
+        scatter = alt.Chart(flight_df).mark_point(size=2.0).encode(
+                alt.X("port_latitude:Q", scale=alt.Scale(zero=False)),
+                alt.Y("port_longitude:Q", scale=alt.Scale(zero=False)),
+                color = alt.condition(interval, alt.value("purple"), alt.value("grey")),
+                opacity = alt.condition(interval, alt.value(1), alt.value(0.2))
+                ).transform_lookup(
+                    lookup=field,
+                    from_=lookup_data,
+                    as_=["state", "port_latitude", "port_longitude"]
+                ).add_selection(interval)
+        # Actually a bar chart
+        hist = alt.Chart(flight_df).mark_bar(tooltip=True
+                ).encode(
+                        x = field,
+                        y = 'count()'
+                ).transform_lookup(
+                    lookup=field,
+                    from_=lookup_data,
+                    as_=["state", "port_latitude", "port_longitude"]
+                ).transform_filter(interval)
+    return scatter, hist, interval
+
+# @st.cache
+def create_map(flight_df, field, to_show):
     '''
     flight_df: real time flight dataframe from AirData
     '''
@@ -173,8 +214,10 @@ def create_map(flight_df):
     # airport points, and flight points
     background = init_background(states)
     # airport_connections = init_airport_connect_airport(flights_airport, lookup_data, select_city)
-    flights_pts, scatter, hist = init_flights(flight_df, select_flight)
-    airport_pts = init_airports(flight_df, lookup_data, select_airport)
+
+    scatter, hist, interval = init_scatter_and_hist(flight_df, field, to_show, lookup_data)
+    flights_pts = init_flights(flight_df, select_flight, interval)
+    airport_pts = init_airports(flight_df, lookup_data, select_airport, interval)
     flight_from = init_flight_connect_airport(flight_df, lookup_data, select_flight, select_airport)
     airports_to = init_airport_connect_flight(flight_df, lookup_data, select_airport)
 

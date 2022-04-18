@@ -6,14 +6,32 @@ from map import create_map
 from airdata import AirData
 from utils import parse_time, parse_time_hms
 
+
+# Getting data ready
+
 ad = AirData()
 flight_df = ad.get_flights_df()
 
 
-map_air = create_map(flight_df)
+# ------------ Map starts ---------------------
 
+with st.sidebar.expander("Analysis for flights"):
+    st.write("This is an analysis tool from the perspective of flights")
+    to_show = st.selectbox("Data to look at", ["flight", "airport"])
+    if to_show == "flight":
+        field = st.selectbox("Variable of interest", ["heading", "altitude", "ground_speed"])
+    else:
+        field = st.selectbox("Variable of interest", ["origin_airport_iata", "destination_airport_iata"])
+
+map_air = create_map(flight_df, field, to_show)
 
 st.altair_chart(map_air)
+
+# ------------ Map ends ---------------------
+
+
+# ------------ Flight time starts ---------------------
+
 
 option = st.selectbox("Which flight number are you looking into?",
                         flight_df['number'])
@@ -41,7 +59,7 @@ col3.metric("Scheduled arrival time", parse_time(option_time['scheduled']['arriv
 col4.metric("Actual arrival time", parse_time(option_time['real']['arrival']))
 
 
-# Add longtitude/latitude option for airport, and also add heading for flights
+# ------------ Flight time ends ---------------------
 
 
 # Note that some flights are not displayed due to... so the number of routes
