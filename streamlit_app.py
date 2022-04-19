@@ -52,7 +52,10 @@ col1, col2 = st.columns(2)
 col1.metric("Scheduled departure time", 
             parse_time(option_time['scheduled']['departure']))
 
-depart_delta = option_time['real']['departure'] - option_time['scheduled']['departure']
+if option_time['real']['departure'] and option_time['scheduled']['departure']:
+    depart_delta = option_time['real']['departure'] - option_time['scheduled']['departure']
+else:
+    depart_delta = None
 col2.metric("Actual departure time", 
             parse_time(option_time['real']['departure']),
             parse_time_hms(depart_delta),
