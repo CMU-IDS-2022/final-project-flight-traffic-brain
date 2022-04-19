@@ -8,9 +8,14 @@ from utils import parse_time, parse_time_hms
 
 
 # Getting data ready
+@st.cache
+def get_data():
+    ad = AirData()
+    flight_df = ad.get_flights_df()
+    return ad, flight_df
 
-ad = AirData()
-flight_df = ad.get_flights_df()
+
+ad, flight_df = get_data()
 
 
 # ------------ Map starts ---------------------
