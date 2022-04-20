@@ -20,8 +20,8 @@ ad, flight_df = get_data()
 
 # ------------ Map starts ---------------------
 
-with st.sidebar.expander("Analysis for flights"):
-    st.write("This is an analysis tool from the perspective of flights")
+with st.sidebar.expander("Analysis for flights/airports"):
+    st.write("This is an analysis tool from the perspective of flights or airports")
     to_show = st.selectbox("Data to look at", ["flight", "airport"])
     if to_show == "flight":
         field = st.selectbox("Variable of interest", ["heading", "altitude", "ground_speed"])
