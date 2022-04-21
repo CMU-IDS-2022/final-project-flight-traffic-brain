@@ -64,7 +64,10 @@ col2.metric("Actual departure time",
 
 col3, col4 = st.columns(2)
 col3.metric("Scheduled arrival time", parse_time(option_time['scheduled']['arrival']))
-col4.metric("Actual arrival time", parse_time(option_time['real']['arrival']))
+arrival_time = option_time['real']['arrival']
+if not arrival_time:
+    arrival_time = option_time['estimated']['arrival']
+col4.metric("Estimated/Actual arrival time", parse_time(arrival_time))
 
 
 # ------------ Flight time ends ---------------------
