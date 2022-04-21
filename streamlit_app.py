@@ -39,7 +39,7 @@ st.altair_chart(map_air)
 
 
 option = st.selectbox("Which flight number are you looking into?",
-                        flight_df['number'])
+                        flight_df['number'].sort_values())
 # Get the corresponding flight row in the dataframe
 option_row = flight_df[flight_df['number'] == option]
 option_id = option_row.id.values[0]
