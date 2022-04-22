@@ -27,7 +27,8 @@ def init_background(states):
         stroke="white"
     ).properties(
         width=750,
-        height=500
+        height=500,
+        title='Real-time Flight Data - Flight:red squares, Airport: blue circles'
     ).project("albersUsa")
     return background
 
