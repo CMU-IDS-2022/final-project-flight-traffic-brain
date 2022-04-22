@@ -127,28 +127,11 @@ def init_airports(flight_df, lookup_data, select_city, interval):
 
 
 def init_flights(flight_df, select_flight, interval):
-    # brush = alt.selection(type='single') 
-    # Note: interval selection directly on map is not feasible: https://github.com/altair-viz/altair/issues/1232
-    # interval = alt.selection(type='interval')
-    # scatter = alt.Chart(flight_df).mark_point(size=2.0).encode(
-    #     alt.X("latitude", scale=alt.Scale(zero=False)),
-    #     alt.Y("longitude", scale=alt.Scale(zero=False)),
-    #     color = alt.condition(interval, alt.value("purple"), alt.value("grey")),
-    #     opacity = alt.condition(interval, alt.value(1), alt.value(0.2))
-    # ).add_selection(interval)
-
-    # hist = alt.Chart(flight_df).mark_bar(tooltip=True
-    #         ).encode(
-    #                 alt.X(flight_field, bin=True),
-    #                 alt.Y(aggregate="count", type='quantitative')
-    #         ).transform_filter(interval)
-
-
     points = alt.Chart(flight_df).mark_square().encode(
         latitude="latitude:Q",
         longitude="longitude:Q",
         tooltip=["number:N", "origin_airport_iata:N", "destination_airport_iata:N"],
-        color=alt.condition(interval, alt.value("red"), alt.value("grey"))
+        color=alt.condition(interval, alt.value("red"), alt.value("grey")),
     ).add_selection(select_flight)
     # todo: connect brush with extra flight information to display...
     # return points, scatter, hist
@@ -157,6 +140,7 @@ def init_flights(flight_df, select_flight, interval):
 
 def init_scatter_and_hist(flight_df, field, to_show, lookup_data):
     if to_show == "flight":
+        # Note: interval selection directly on map is not feasible: https://github.com/altair-viz/altair/issues/1232
         interval = alt.selection(type='interval')
         scatter = alt.Chart(flight_df).mark_point(size=2.0).encode(
             alt.X("latitude", scale=alt.Scale(zero=False)),
