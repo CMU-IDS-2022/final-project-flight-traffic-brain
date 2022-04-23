@@ -4,3 +4,4 @@ altair
 vega_datasets
 numpy
 FlightRadarAPI
+sklearn
