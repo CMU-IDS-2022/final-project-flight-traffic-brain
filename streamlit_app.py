@@ -147,7 +147,7 @@ def get_slice_membership(df, ogstate=None, destate=None, ogcity=None, destcity=N
     return labels
 
 # ------------ Flight price prediction starts ---------------------
-## Price Prediction Part #1
+## Price Prediction 
 st.title("Flight Price Prediction")
 
 # 1. ML prediction
@@ -252,6 +252,39 @@ else:
     with col1:
         st.metric(" ", 'Not Available')
         st.markdown("**Please choose a different origin or destination!**")
+        
+# ------------ Flight price prediction starts ---------------------        
+        
+## Price comparison
+st.title("Choose the flight you are interested in")
+df = load_data()
+
+
+cols = st.columns(3)
+with cols[0]:
+    ogstate = st.selectbox('Origin State', sorted(df['OriginState'].unique()))
+    slice_ogstates = get_slice_ogstate(df,ogstate)
+    ogcity = st.multiselect('Origin City', sorted(df[slice_ogstates]['ogCity'].unique()))
+
+with cols[1]:  
+    destate = st.selectbox('Destination State', sorted(df['DestState'].unique()))
+    slice_destates = get_slice_destate(df,destate)
+    destcity = st.multiselect('Destination City', sorted(df[slice_destates]['destCity'].unique()))
+
+
+with cols[2]:
+    quarter = st.multiselect('Quarter',sorted(df['Quarter'].unique()))
+    airline = st.multiselect('Airline Company', sorted(df['AirlineCompany'].unique()))
+
+slice_labels = get_slice_membership(df, ogstate, destate, ogcity, destcity, quarter, airline)
+slice_labels.name = "slice_membership"
+
+df_show = df[slice_labels].iloc[:,:][['PricePerTicket','og','dest','Quarter','AirlineCompany']].sort_values(by='PricePerTicket',ascending = False)
+if df_show.empty:
+    st.metric(" ", "No Data Available")
+else:
+    st.write(df_show)
+
 
     
 
