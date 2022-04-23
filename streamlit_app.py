@@ -91,9 +91,9 @@ df_viz = pd.read_csv('df_viz.csv').iloc[:,:]
 
 # fit the prediction model, get mean and prediction interval
 def get_pi(X):
-    rb_lower = pickle.load(open(f'D:\\Users\\tinaf\\Dropbox\\CMU\\1-Course-Related\\##S22##\\05839_IDS\\final_project\\airline_2018_us\\gb_lower.sav', 'rb'))
-    rb_mean = pickle.load(open(f'D:\\Users\\tinaf\\Dropbox\\CMU\\1-Course-Related\\##S22##\\05839_IDS\\final_project\\airline_2018_us\\gb_mean.sav', 'rb'))
-    rb_upper = pickle.load(open(f'D:\\Users\\tinaf\\Dropbox\\CMU\\1-Course-Related\\##S22##\\05839_IDS\\final_project\\airline_2018_us\\gb_upper.sav', 'rb'))
+    rb_lower = pickle.load(open('gb_lower.sav', 'rb'))
+    rb_mean = pickle.load(open('gb_mean.sav', 'rb'))
+    rb_upper = pickle.load(open('gb_upper.sav', 'rb'))
     lb = rb_lower.predict(X)
     mean = rb_mean.predict(X)
     ub = rb_upper.predict(X)
@@ -102,7 +102,7 @@ def get_pi(X):
 
 # load data for non ML visual
 def load_data():
-    return pd.read_csv('D:\\Users\\tinaf\\Dropbox\\CMU\\1-Course-Related\\##S22##\\05839_IDS\\final_project\\airline_2018_us\\train_viz.csv').iloc[:,:]
+    return pd.read_csv('train_viz.csv').iloc[:,:]
     
 
 # visual for price comparison
@@ -151,7 +151,7 @@ def get_slice_membership(df, ogstate=None, destate=None, ogcity=None, destcity=N
 st.title("Flight Price Prediction")
 
 # 1. ML prediction
-X_train=pd.read_csv('D:\\Users\\tinaf\\Dropbox\\CMU\\1-Course-Related\\##S22##\\05839_IDS\\final_project\\airline_2018_us\\X_train.csv')
+X_train=pd.read_csv('X_train.csv')
 features = list(X_train.columns)
 del X_train
 df_pred = pd.DataFrame(0, index=np.arange(1), columns=features)
