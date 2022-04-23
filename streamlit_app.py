@@ -204,11 +204,11 @@ if og!=de:
         bar = alt.Chart(df_viz).mark_bar(opacity=0.3,).encode(
             alt.X('PricePerTicket:Q',title="Price per Ticket ($)"),#scale=alt.Scale(type='log')),
             alt.Y('count()',title='Raw Frequency Count')
-            #tooltip = ["AirlineCompany"]
+            tooltip = ["AirlineCompany","Quarter"]
         ).properties(
             title='Unit Price Distribution'
         #).transform_filter(
-        )#.interactive()
+        ).interactive()
 
         mean = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
             x='Mean:Q',
@@ -246,8 +246,8 @@ if og!=de:
             alt.Color("AirlineCompany")
         ).transform_filter(selection) 
 
-        st.altair_chart(price_interaction)
-        #st.altair_chart(price_chart)
+        #st.altair_chart(price_interaction)
+        st.altair_chart(price_chart)
 else:
     with col1:
         st.metric(" ", 'Not Available')
