@@ -146,7 +146,8 @@ def get_slice_membership(df, ogstate=None, destate=None, ogcity=None, destcity=N
         labels &= df['AirlineCompany'].isin(airline)
     return labels
 
-# ------------ Flight price prediction starts ---------------------
+        
+# ------------------------ Flight price prediction starts ------------------------------    
 ## Price Prediction 
 st.title("Flight Price Prediction")
 
@@ -201,14 +202,13 @@ if og!=de:
 
     with st.expander("See price distribution"):
         # plot price dist
-        bar = alt.Chart(df_viz).mark_bar(opacity=0.3,).encode(
+        bar = alt.Chart(df_viz).mark_bar(opacity=0.3,tooltip = True).encode(
             alt.X('PricePerTicket:Q',title="Price per Ticket ($)"),#scale=alt.Scale(type='log')),
             alt.Y('count()',title='Raw Frequency Count')
-            tooltip = ["AirlineCompany","Quarter"]
         ).properties(
             title='Unit Price Distribution'
         #).transform_filter(
-        ).interactive()
+        )#.interactive()
 
         mean = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
             x='Mean:Q',
@@ -246,15 +246,18 @@ if og!=de:
             alt.Color("AirlineCompany")
         ).transform_filter(selection) 
 
-        #st.altair_chart(price_interaction)
-        st.altair_chart(price_chart)
+        st.altair_chart(price_interaction)
+        #st.altair_chart(price_chart)
 else:
     with col1:
         st.metric(" ", 'Not Available')
         st.markdown("**Please choose a different origin or destination!**")
         
-# ------------ Flight price prediction starts ---------------------        
+# ------------------------ Flight price prediction ends ------------------------------       
         
+    
+    
+# ------------------------ Flight price comparison starts ------------------------------           
 ## Price comparison
 st.title("Choose the flight you are interested in")
 df = load_data()
