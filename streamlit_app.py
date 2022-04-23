@@ -250,8 +250,8 @@ if og!=de:
         #st.altair_chart(price_chart)
 else:
     with col1:
-        st.metric(" ", 'Not Available')
-        st.markdown("**Please choose a different origin or destination!**")
+        st.metric(" ", 'Not Available',delta_color="inverse")
+        st.markdown("**Please choose a different origin or destination!**",delta_color="inverse")
         
 # ------------------------ Flight price prediction ends ------------------------------       
         
