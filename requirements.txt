@@ -1,5 +1,5 @@
 streamlit
-pandas==1.2.5
+pandas
 altair
 vega_datasets
 numpy
