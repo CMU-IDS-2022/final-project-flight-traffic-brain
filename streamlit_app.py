@@ -77,3 +77,72 @@ col4.metric("Estimated/Actual arrival time", parse_time(arrival_time))
 # may appear larger than...
 
 
+
+## Prepare data
+# load in files
+origin = pickle.load(open('OriginState.sav','rb'))
+dest = pickle.load(open('DestState.sav','rb'))
+air = pickle.load(open('AirlineCompany.sav','rb'))
+miles_dic = pickle.load(open('miles_dic.sav','rb'))
+quarter_dic= {'Spring':'Q1','Summer':'Q2','Fall':'Q3','Winter':'Q4'}
+df_viz = pd.read_csv('df_viz.csv').iloc[:,:]
+
+# fit the prediction model, get mean and prediction interval
+def get_pi(X):
+    rb_lower = pickle.load(open(f'D:\\Users\\tinaf\\Dropbox\\CMU\\1-Course-Related\\##S22##\\05839_IDS\\final_project\\airline_2018_us\\gb_lower.sav', 'rb'))
+    rb_mean = pickle.load(open(f'D:\\Users\\tinaf\\Dropbox\\CMU\\1-Course-Related\\##S22##\\05839_IDS\\final_project\\airline_2018_us\\gb_mean.sav', 'rb'))
+    rb_upper = pickle.load(open(f'D:\\Users\\tinaf\\Dropbox\\CMU\\1-Course-Related\\##S22##\\05839_IDS\\final_project\\airline_2018_us\\gb_upper.sav', 'rb'))
+    lb = rb_lower.predict(X)
+    mean = rb_mean.predict(X)
+    ub = rb_upper.predict(X)
+    return (round(np.exp(lb[0]),2), round(np.exp(mean[0]),2), round(np.exp(ub[0]),2))
+
+
+# load data for non ML visual
+def load_data():
+    return pd.read_csv('D:\\Users\\tinaf\\Dropbox\\CMU\\1-Course-Related\\##S22##\\05839_IDS\\final_project\\airline_2018_us\\train_viz.csv').iloc[:,:]
+    
+
+# visual for price comparison
+@st.cache
+def get_slice_ogstate(df, ogstate=None):
+    labels = pd.Series([1] * len(df), index=df.index)
+    labels &= df['OriginState'] == ogstate
+    return labels
+
+
+def get_slice_destate(df, destate=None):
+    labels = pd.Series([1] * len(df), index=df.index)
+    labels &= df['DestState'] == destate
+    return labels
+
+
+def get_slice_ogcity(df, ogcity=None):
+    labels = pd.Series([1] * len(df), index=df.index)
+    labels &= df['ogCity'] == ogcity
+    return labels
+
+
+def get_slice_destcity(df, destcity=None):
+    labels = pd.Series([1] * len(df), index=df.index)
+    labels &= df['destCity'] == destcity
+    return labels
+
+def get_slice_membership(df, ogstate=None, destate=None, ogcity=None, destcity=None, quarter=None, airline=None):
+    labels = pd.Series([1] * len(df), index=df.index)
+    if ogstate:
+        labels &= df['OriginState'] == ogstate
+    if destate is not None:
+        labels &= df['DestState'] == destate
+    if ogcity:
+        labels &= df['ogCity'].isin(ogcity)
+    if destcity:
+        labels &= df['destCity'].isin(destcity)
+    if quarter:
+        labels &= df['Quarter'].isin(quarter)
+    if airline:
+        labels &= df['AirlineCompany'].isin(airline)
+    return labels
+
+# ------------ Flight price prediction starts ---------------------
+
