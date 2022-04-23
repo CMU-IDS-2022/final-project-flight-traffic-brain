@@ -145,4 +145,109 @@ def get_slice_membership(df, ogstate=None, destate=None, ogcity=None, destcity=N
     return labels
 
 # ------------ Flight price prediction starts ---------------------
+## Price Prediction Part #1
+st.title("Flight Price Prediction")
+
+# 1. ML prediction
+X_train=pd.read_csv('D:\\Users\\tinaf\\Dropbox\\CMU\\1-Course-Related\\##S22##\\05839_IDS\\final_project\\airline_2018_us\\X_train.csv')
+features = list(X_train.columns)
+del X_train
+df_pred = pd.DataFrame(0, index=np.arange(1), columns=features)
+
+col1, col2 = st.columns([3, 2])
+with col2:
+    og = st.selectbox('Origin', np.array(origin))
+    de = st.selectbox('Destination', np.array(dest))
+    season = st.selectbox('Season', ['Spring','Summer','Fall','Winter'])
+    airline = st.selectbox('Airline Company', np.array(air))
+    numT = st.slider('Number of tickets', 1, 15, 1)
+    if og != "Virgin Islands":
+        df_pred[f'o{og}'] = 1
+    else:
+        df_pred['oU.S. Virgin Islands']=1
+    if de != "Virgin Islands":
+        df_pred[f'd{de}'] = 1
+    else:
+        df_pred['dU.S. Virgin Islands']=1
+    
+    if season!='Spring':
+        df_pred[quarter_dic[season]] = 1
+    
+    if airline[-3:-1]!='AA':
+        df_pred[airline[-3:-1]] = 1  
+    
+    df_pred['NumTicketsOrdered'] = numT
+
+
+    if og!=de:
+        try:
+            miles = miles_dic[(og,de)]
+        except:
+            miles = miles_dic[(de,og)]
+        df_pred['log_miles']=np.log(miles)
+    else:
+        st.markdown(" ")
+    
+ 
+if og!=de:
+    low, mean, high = get_pi(pd.DataFrame(df_pred))
+    with col1:
+        st.metric("Low", f'${low}',"+$")
+        st.metric("Mean", f'${mean}')
+        st.metric("High", f'${high}',"-$")
+        df_interval = pd.DataFrame([[low,mean,high]],columns=['Low','Mean','High'])
+
+    with st.expander("See price distribution"):
+        # plot price dist
+        bar = alt.Chart(df_viz).mark_bar(opacity=0.3,).encode(
+            alt.X('PricePerTicket:Q',title="Price per Ticket ($)"),#scale=alt.Scale(type='log')),
+            alt.Y('count()',title='Raw Frequency Count')
+            #tooltip = ["AirlineCompany"]
+        ).properties(
+            title='Unit Price Distribution'
+        #).transform_filter(
+        )#.interactive()
+
+        mean = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
+            x='Mean:Q',
+            size=alt.value(4),
+            
+        )
+
+        low = alt.Chart(df_interval.sample(1)).mark_rule(color='red',tooltip=True).encode(
+            x='Low:Q',
+            size=alt.value(2),
+            #strokeDash='Quarter'
+        )
+
+        high = alt.Chart(df_interval.sample(1)).mark_rule(color='red',tooltip=True).encode(
+            x='High:Q',
+            size=alt.value(2),
+            #tooltip = 'PricePerTicket'
+            #strokeDash='Quarter'
+        )
+        price_chart = bar + mean + low+ high
+
+        selection = alt.selection_interval()
+        hist = alt.Chart(df_viz.sample(5000,random_state=216)).mark_bar(
+            tooltip=True
+        ).encode(
+            alt.Y("Quarter:O"),
+            alt.X('PricePerTicket:Q'),
+            #alt.Color("AirlineCompany", scale=alt.Scale(domain=air, range=[
+                #"orangered", "purple", "seagreen",'yellow','red','blue','pink','salmon','orange','green','violet','gold'])
+        )
+
+        price_interaction = bar.add_selection(selection).encode(
+         #color=alt.condition(selection, "PricePerTicket:O", alt.value("grey"))
+        ) + low+mean+high| hist.encode(
+            alt.Color("AirlineCompany")
+        ).transform_filter(selection) 
+
+        st.altair_chart(price_interaction)
+        #st.altair_chart(price_chart)
+else:
+    with col1:
+        st.metric(" ", 'Not Available')
+        st.markdown("**Please choose a different origin or destination!**")
 
