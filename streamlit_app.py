@@ -37,8 +37,8 @@ df_viz = pd.read_csv('df_viz.csv').iloc[:,:]
 def get_pi(X):
     all_models = pickle.load(open('all_models.sav', 'rb'))
     lb = all_models[0].predict(X)
-    pred = all_models[1].predict(X)
-    ub = all_models[2].predict(X)
+    pred = all_models[2].predict(X)
+    ub = all_models[1].predict(X)
     return (round(np.exp(lb[0]),2), round(np.exp(pred[0]),2), round(np.exp(ub[0]),2))
 
 
