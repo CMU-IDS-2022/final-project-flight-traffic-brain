@@ -362,7 +362,7 @@ else:
             st.metric("High", f'${high}',"-$",delta_color="inverse")
             df_interval = pd.DataFrame([[low,median,high]],columns=['Low','Median','High'])
             
-
+        st.write("See where your flight falls in the historical price distribution")
         with st.expander("See price distribution"):
             # plot price dist
             bar = alt.Chart(df_viz).mark_bar(opacity=0.3,tooltip = True).encode(
@@ -393,7 +393,7 @@ else:
             )
             price_chart = bar + median + low+ high
             
-            st.write("See where your flight falls in the historical price distribution")
+            
             st.altair_chart(price_chart)
         
     else:
@@ -407,7 +407,7 @@ else:
         
     # ------------------------ Flight price comparison starts ------------------------------           
     ## Price comparison
-    st.header("Choose the historical information of the flight you are interested in")
+    st.header("Check the historical information of the flight you are interested in")
     df = load_data_ml()
 
 
@@ -438,7 +438,7 @@ else:
         st.write(df_show)
 
     df = load_data('train_viz.csv')
-    st.title("Choose the season you want to travel, find the most economical route and airline")
+    st.header("Choose the season you want to travel, find the most economical route and airline")
 
     quarter = st.selectbox('Season(Quarter)', sorted(df['Quarter'].unique()))
     season_df = get_season(df,quarter)
