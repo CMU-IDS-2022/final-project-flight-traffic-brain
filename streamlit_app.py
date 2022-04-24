@@ -355,12 +355,12 @@ else:
         
     
     if og!=de:
-        low, median, high = get_pi(pd.DataFrame(df_pred))
+        low, mean, high = get_pi(pd.DataFrame(df_pred))
         with col1:
             st.metric("Low", f'${low}',"+$",delta_color="inverse")
-            st.metric("Median", f'${median}')
+            st.metric("Mean", f'${mean}')
             st.metric("High", f'${high}',"-$",delta_color="inverse")
-            df_interval = pd.DataFrame([[low,median,high]],columns=['Low','Median','High'])
+            df_interval = pd.DataFrame([[low,mean,high]],columns=['Low','Mean','High'])
             
         st.write("See where your flight falls in the historical price distribution (2018)")
         with st.expander("See price distribution"):
@@ -373,8 +373,8 @@ else:
             #).transform_filter(
             ).interactive()
 
-            median = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
-                x='Median:Q',
+            mean = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
+                x='Mean:Q',
                 size=alt.value(4),
                 
             )
@@ -391,7 +391,7 @@ else:
                 #tooltip = 'PricePerTicket'
                 #strokeDash='Quarter'
             )
-            price_chart = bar + median + low+ high
+            price_chart = bar + mean + low+ high
             
             
             st.altair_chart(price_chart)
