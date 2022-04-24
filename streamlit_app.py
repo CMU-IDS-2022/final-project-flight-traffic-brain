@@ -320,6 +320,7 @@ else:
     df_pred = pd.DataFrame(0, index=np.arange(1), columns=features)
 
     col1, col2 = st.columns([3, 2])
+    st.write(df_pred)
     with col2:        
         og = st.selectbox('Origin', np.array(origin),index=30)
         de = st.selectbox('Destination', np.array(dest),index=4)
