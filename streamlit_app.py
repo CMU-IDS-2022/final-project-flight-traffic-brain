@@ -353,7 +353,6 @@ else:
     if og!=de:
         low, median, high = get_pi(pd.DataFrame(df_pred))
         with col1:
-            st.write(df_pred)
             st.metric("Low", f'${low}',"+$",delta_color="inverse")
             st.metric("Median", f'${median}')
             st.metric("High", f'${high}',"-$",delta_color="inverse")
