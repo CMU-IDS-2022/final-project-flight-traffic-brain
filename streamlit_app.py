@@ -386,7 +386,7 @@ else:
                 #tooltip = 'PricePerTicket'
                 #strokeDash='Quarter'
             )
-            price_chart = bar + mean + low+ high
+            price_chart = bar + median + low+ high
 
             st.altair_chart(price_chart)
         
