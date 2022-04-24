@@ -231,7 +231,7 @@ if og!=de:
         price_chart = bar + mean + low+ high
 
         st.altair_chart(price_chart)
-        st.altair_chart(mean)
+       
 else:
     with col1:
         st.metric(" ", 'Not Available')
