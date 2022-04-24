@@ -404,11 +404,11 @@ else:
 
     cols = st.columns(3)
     with cols[0]:
-        ogstate = st.selectbox('Origin State', sorted(df['OriginState'].unique()),index=sorted(df['OriginState'].unique().index=(New York')))
+        ogstate = st.selectbox('Origin State', sorted(df['OriginState'].unique()),index=sorted(df['OriginState'].unique().index=('New York')))
         
 
     with cols[1]:  
-        destate = st.selectbox('Destination State', sorted(df['DestState'].unique()),index=sorted(df['DestState'].unique().index=(California')))
+        destate = st.selectbox('Destination State', sorted(df['DestState'].unique()),index=sorted(df['DestState'].unique().index=('California')))
 
 
     with cols[2]:
