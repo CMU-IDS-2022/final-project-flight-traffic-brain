@@ -283,7 +283,7 @@ slice_labels = get_slice_membership(df, ogstate, destate, ogcity, destcity, quar
 slice_labels.name = "slice_membership"
 
 df_show = df[slice_labels].iloc[:,:][['PricePerTicket','og','dest','Quarter','AirlineCompany']].sort_values(by='PricePerTicket')
-df_show = df_show.rename(columns={'PricePerTicket':'Price per Ticket ($)','og':'Origin','dest':'Destination'})
+df_show = df_show.rename(columns={'PricePerTicket':'Price per Ticket ($)','og':'Origin','dest':'Destination'}).reset_index(drop=True)
 df_show['Price per Ticket ($)'] = df_show['Price per Ticket ($)'].apply(lambda x: "{:.2f}".format(x))
 if df_show.empty:
     st.metric(" ", "No Data Available")
