@@ -317,8 +317,8 @@ else:
 
     col1, col2 = st.columns([3, 2])
     with col2:        
-        og = st.selectbox('Origin', np.array(origin),index=20)
-        de = st.selectbox('Destination', np.array(dest),index=30)
+        og = st.selectbox('Origin', np.array(origin),index=30)
+        de = st.selectbox('Destination', np.array(dest),index=4)
         season = st.selectbox('Season', ['Spring','Summer','Fall','Winter'])
         airline = st.selectbox('Airline Company', np.array(air))
         numT = st.slider('Number of tickets', 1, 15, 1)
