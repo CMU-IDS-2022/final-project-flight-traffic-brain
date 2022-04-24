@@ -208,21 +208,21 @@ if og!=de:
         ).properties(
             title='Unit Price Distribution'
         #).transform_filter(
-        )#.interactive()
+        ).interactive()
 
-        mean = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
+        mean = alt.Chart(df_interval).mark_rule(color='darkviolet',tooltip=True).encode(
             x='Mean:Q',
             size=alt.value(4),
             
         )
 
-        low = alt.Chart(df_interval.sample(1)).mark_rule(color='red',tooltip=True).encode(
+        low = alt.Chart(df_interval.sample(1)).mark_rule(color='darkblue',tooltip=True).encode(
             x='Low:Q',
             size=alt.value(2),
             #strokeDash='Quarter'
         )
 
-        high = alt.Chart(df_interval.sample(1)).mark_rule(color='red',tooltip=True).encode(
+        high = alt.Chart(df_interval.sample(1)).mark_rule(color='darkred',tooltip=True).encode(
             x='High:Q',
             size=alt.value(2),
             #tooltip = 'PricePerTicket'
@@ -246,8 +246,8 @@ if og!=de:
             alt.Color("AirlineCompany")
         ).transform_filter(selection) 
 
-        st.altair_chart(price_interaction)
-        #st.altair_chart(price_chart)
+        #st.altair_chart(price_interaction)
+        st.altair_chart(price_chart)
 else:
     with col1:
         st.metric(" ", 'Not Available')
@@ -282,7 +282,9 @@ with cols[2]:
 slice_labels = get_slice_membership(df, ogstate, destate, ogcity, destcity, quarter, airline)
 slice_labels.name = "slice_membership"
 
-df_show = df[slice_labels].iloc[:,:][['PricePerTicket','og','dest','Quarter','AirlineCompany']].sort_values(by='PricePerTicket',ascending = False)
+df_show = df[slice_labels].iloc[:,:][['PricePerTicket','og','dest','Quarter','AirlineCompany']].sort_values(by='PricePerTicket')
+df_show.rename(columns={'PricePerTicket':'Price per Ticket ($)','og':'Origin','dest':'Destination'})
+df_show['Price per Ticket ($)'] = df_show['Price per Ticket ($)'].apply(lambda x: "{:.2f}".format(x))
 if df_show.empty:
     st.metric(" ", "No Data Available")
 else:
