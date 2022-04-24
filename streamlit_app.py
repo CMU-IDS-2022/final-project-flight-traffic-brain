@@ -353,7 +353,7 @@ else:
             df_pred['log_miles']=np.log(miles)
         else:
             st.markdown(" ")
-        st.write(df_pred)
+        
     
     if og!=de:
         low, mean, high = get_pi(pd.DataFrame(df_pred))
