@@ -387,6 +387,7 @@ else:
                 #strokeDash='Quarter'
             )
             price_chart = bar + median + low+ high
+            st.write(df_pred)
 
             st.altair_chart(price_chart)
         
