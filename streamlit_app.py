@@ -353,10 +353,12 @@ else:
     if og!=de:
         low, median, high = get_pi(pd.DataFrame(df_pred))
         with col1:
+            st.write(df_pred)
             st.metric("Low", f'${low}',"+$",delta_color="inverse")
             st.metric("Median", f'${median}')
             st.metric("High", f'${high}',"-$",delta_color="inverse")
             df_interval = pd.DataFrame([[low,median,high]],columns=['Low','Median','High'])
+            
 
         with st.expander("See price distribution"):
             # plot price dist
@@ -387,7 +389,7 @@ else:
                 #strokeDash='Quarter'
             )
             price_chart = bar + median + low+ high
-            st.write(df_pred)
+            
 
             st.altair_chart(price_chart)
         
