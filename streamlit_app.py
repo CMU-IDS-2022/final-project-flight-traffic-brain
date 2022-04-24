@@ -91,6 +91,7 @@ menu_selection =  st.sidebar.radio("Menu", ["Flight Map", "Flight Delay Analysis
                                             "Flight Price"])
 if menu_selection == "Flight Map":
 
+    st.title("Real-time Flight Data Visualization with Maps and Charts")
     # ------------ Map starts ---------------------
 
     with st.sidebar.expander("Analysis for flights/airports"):
@@ -104,6 +105,10 @@ if menu_selection == "Flight Map":
     map_air = create_map(flight_df, field, to_show)
 
     st.altair_chart(map_air)
+
+    st.sidebar.title("Note")
+
+    st.sidebar.write("This is a temporary note.")
 
     # ------------ Map ends ---------------------
 
