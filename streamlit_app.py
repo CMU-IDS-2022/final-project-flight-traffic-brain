@@ -307,9 +307,13 @@ else:
 
     # ------------------------ Flight price prediction starts ------------------------------    
     ## Price Prediction 
-    st.title("Flight Price Prediction")
-
+    st.title("Flight Price Analysis")
+    
     # 1. ML prediction
+    st.header("Flight Price Prediction")
+    st.write("Tell us your intended flight information and get predicted flight price value and range.")
+    
+
     X_train=pd.read_csv('X_train.csv')
     features = list(X_train.columns)
     del X_train
@@ -389,7 +393,7 @@ else:
             )
             price_chart = bar + median + low+ high
             
-
+            st.write("See where your flight falls in the historical price distribution")
             st.altair_chart(price_chart)
         
     else:
@@ -403,7 +407,7 @@ else:
         
     # ------------------------ Flight price comparison starts ------------------------------           
     ## Price comparison
-    st.title("Choose the flight you are interested in")
+    st.header("Choose the historical information of the flight you are interested in")
     df = load_data_ml()
 
 
@@ -429,6 +433,7 @@ else:
     df_show['Price per Ticket ($)'] = df_show['Price per Ticket ($)'].apply(lambda x: "{:.2f}".format(x))
     if df_show.empty:
         st.metric(" ", "No Data Available")
+        st.write("Please deselect some quarter options or change origin/destination state.") 
     else:
         st.write(df_show)
 
