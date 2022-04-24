@@ -333,7 +333,7 @@ else:
         if de != "Virgin Islands":
             df_pred[f'd{de}'] = 1
         else:
-            df_pred['dU.S. Virgin Isands']
+            df_pred['dU.S. Virgin Isands']=1
         
         if season!='Spring':
             df_pred[quarter_dic[season]] = 1
