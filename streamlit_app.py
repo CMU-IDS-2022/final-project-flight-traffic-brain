@@ -314,6 +314,10 @@ else:
 
     col1, col2 = st.columns([3, 2])
     with col2:
+        values = ['<select>',3, 5, 10, 15, 20, 30]
+        default_ix = values.index(30)
+        og = st.selectbox('Origin', values, index=default_ix)
+        
         og = st.selectbox('Origin', np.array(origin))
         de = st.selectbox('Destination', np.array(dest))
         season = st.selectbox('Season', ['Spring','Summer','Fall','Winter'])
