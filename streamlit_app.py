@@ -448,23 +448,30 @@ else:
     heat_price = heat_price.groupby(['OriginState','DestState'])[['PricePerTicket','Miles']].mean().reset_index()
     # Drop the invalid value(origin = destination)
     heat_price = heat_price[heat_price['OriginState'] != heat_price['DestState']]
+    
+    pts = alt.selection(type="multi", encodings=['x','y'])
 
-    heatmap = alt.Chart(heat_price).mark_rect().encode(
+    heat = alt.Chart(heat_price).mark_rect().encode(
         x='OriginState:O',
         y='DestState:O',
-        color='PricePerTicket:Q',
+        color=alt.condition(pts,'PricePerTicket:Q', alt.ColorValue("grey")),
         tooltip=['OriginState', 'DestState', 'PricePerTicket','Miles']
-    )
-    st.altair_chart(heatmap)
+    ).add_selection(pts)
 
-    box = alt.Chart(season_df).mark_boxplot(extent='min-max').encode(
+
+    box = alt.Chart(df).mark_boxplot(extent='min-max').encode(
         x='AirlineCompany:O',
         y='PricePerTicket:Q',
         color=alt.Color('AirlineCompany')
-        
-    ).properties(
-        width=500,
-        height=300)
-    st.altair_chart(box)
 
+    ).properties(
+        width=300,
+        height=200,
+    ).transform_filter(
+        pts
+    )
+
+    st.altair_chart(alt.vconcat(heat,box))
+
+    
 
