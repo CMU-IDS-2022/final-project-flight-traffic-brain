@@ -362,7 +362,7 @@ else:
             st.metric("High", f'${high}',"-$",delta_color="inverse")
             df_interval = pd.DataFrame([[low,median,high]],columns=['Low','Median','High'])
             
-        st.write("See where your flight falls in the historical price distribution")
+        st.write("See where your flight falls in the historical price distribution (2018)")
         with st.expander("See price distribution"):
             # plot price dist
             bar = alt.Chart(df_viz).mark_bar(opacity=0.3,tooltip = True).encode(
@@ -408,6 +408,7 @@ else:
     # ------------------------ Flight price comparison starts ------------------------------           
     ## Price comparison
     st.header("Check the historical information of the flight you are interested in")
+    st.header('We will look at some historical data in 2018.')
     df = load_data_ml()
 
 
@@ -432,11 +433,14 @@ else:
     df_show = df_show.rename(columns={'PricePerTicket':'Price per Ticket ($)','og':'Origin','dest':'Destination'}).reset_index(drop=True)
     df_show['Price per Ticket ($)'] = df_show['Price per Ticket ($)'].apply(lambda x: "{:.2f}".format(x))
     if df_show.empty:
-        st.metric(" ", "No Data Available")
+        st.metric(" ", "No Historical Data Available")
         st.write("Please deselect some quarter options or change origin/destination state.") 
     else:
         st.write(df_show)
 
+    # ------------------------ Flight price comparison starts ------------------------------ --------
+
+        
     df = load_data('train_viz.csv')
     st.header("Choose the season you want to travel, find the most economical route and airline")
 
