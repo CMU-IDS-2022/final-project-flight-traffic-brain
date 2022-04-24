@@ -24,7 +24,7 @@ ad, flight_df = get_data()
 
 ## Prepare data
 # load in files
-origin = pickle.load(open('OriginState.sav','rb'))
+origin = pickle.load(open('DestState.sav','rb'))
 dest = pickle.load(open('DestState.sav','rb'))
 air = pickle.load(open('AirlineCompany.sav','rb'))
 miles_dic = pickle.load(open('miles_dic.sav','rb'))
