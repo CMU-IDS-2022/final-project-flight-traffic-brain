@@ -368,7 +368,7 @@ else:
             #).transform_filter(
             ).interactive()
 
-            Median = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
+            median = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
                 x='Median:Q',
                 size=alt.value(4),
                 
