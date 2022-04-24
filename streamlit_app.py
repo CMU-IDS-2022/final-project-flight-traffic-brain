@@ -40,8 +40,8 @@ def get_pi(X):
     #rb_upper = pickle.load(open('gb_upper.sav', 'rb'))
     all_models = pickle.load(open('all_models.sav', 'rb'))
     lb = all_models['q 0.20'].predict(X)
-    pred = all_models['q 0.5'].predict(X)
-    ub = all_models['q 0.8'].predict(X)
+    pred = all_models['q 0.50'].predict(X)
+    ub = all_models['q 0.80'].predict(X)
     return (round(np.exp(lb[0]),2), round(np.exp(pred[0]),2), round(np.exp(ub[0]),2))
 
 
