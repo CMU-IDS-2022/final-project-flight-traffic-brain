@@ -230,24 +230,8 @@ if og!=de:
         )
         price_chart = bar + mean + low+ high
 
-        selection = alt.selection_interval()
-        hist = alt.Chart(df_viz.sample(5000,random_state=216)).mark_bar(
-            tooltip=True
-        ).encode(
-            alt.Y("Quarter:O"),
-            alt.X('PricePerTicket:Q'),
-            #alt.Color("AirlineCompany", scale=alt.Scale(domain=air, range=[
-                #"orangered", "purple", "seagreen",'yellow','red','blue','pink','salmon','orange','green','violet','gold'])
-        )
-
-        price_interaction = bar.add_selection(selection).encode(
-         #color=alt.condition(selection, "PricePerTicket:O", alt.value("grey"))
-        ) + low+mean+high| hist.encode(
-            alt.Color("AirlineCompany")
-        ).transform_filter(selection) 
-
-        #st.altair_chart(price_interaction)
         st.altair_chart(price_chart)
+        st.altair_chart(mean)
 else:
     with col1:
         st.metric(" ", 'Not Available')
