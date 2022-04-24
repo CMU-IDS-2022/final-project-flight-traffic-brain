@@ -210,7 +210,7 @@ if og!=de:
         #).transform_filter(
         ).interactive()
 
-        mean = alt.Chart(df_interval).mark_rule(color='darkviolet',tooltip=True).encode(
+        mean = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
             x='Mean:Q',
             size=alt.value(4),
             
@@ -222,7 +222,7 @@ if og!=de:
             #strokeDash='Quarter'
         )
 
-        high = alt.Chart(df_interval.sample(1)).mark_rule(color='darkred',tooltip=True).encode(
+        high = alt.Chart(df_interval.sample(1)).mark_rule(color='darkblue',tooltip=True).encode(
             x='High:Q',
             size=alt.value(2),
             #tooltip = 'PricePerTicket'
