@@ -296,12 +296,21 @@ def load_data(url):
     return df
 
 df = load_data('train_viz.csv')
-st.title("Flight Price Heatmap among states")
+st.title("Choose the season you want to travel, find the most economical route and airline")
+
+def get_season(df, quarter):
+    sub = df[df['Quarter']== quarter]
+
+    return sub
+
+quarter = st.selectbox('Season(Quarter)', sorted(df['Quarter'].unique()))
+season_df = get_season(df,quarter)
+
 
 # Take top 20 frequency states
 statelist = ['California','Florida','Texas','New York','Georgia','Illinois','Nevada','Virginia','Massachusetts',
              'Washington','Pennsylvania','Arizona','New Jersey','Minnesota','Michigan','Missouri','Maryland','Hawaii']
-heat_price = df[df['OriginState'].isin(statelist) ]
+heat_price = season_df[season_df['OriginState'].isin(statelist) ]
 heat_price = heat_price[heat_price['DestState'].isin(statelist) ]
 # Take average price and miles per route
 heat_price = heat_price.groupby(['OriginState','DestState'])[['PricePerTicket','Miles']].mean().reset_index()
@@ -314,5 +323,16 @@ heatmap = alt.Chart(heat_price).mark_rect().encode(
     color='PricePerTicket:Q',
     tooltip=['OriginState', 'DestState', 'PricePerTicket','Miles']
 )
-st.altair_chart(heatmap)  
+st.altair_chart(heatmap)
+
+box = alt.Chart(season_df).mark_boxplot(extent='min-max').encode(
+    x='AirlineCompany:O',
+    y='PricePerTicket:Q',
+    color=alt.Color('AirlineCompany')
+    
+).properties(
+    width=500,
+    height=300)
+st.altair_chart(box)
+
 
