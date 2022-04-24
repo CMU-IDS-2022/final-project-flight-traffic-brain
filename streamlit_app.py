@@ -33,11 +33,8 @@ df_viz = pd.read_csv('df_viz.csv').iloc[:,:]
 
 
 
-# fit the prediction model, get mean and prediction interval
+# fit the prediction model, get prediction and prediction interval
 def get_pi(X):
-    #rb_lower = pickle.load(open('gb_lower.sav', 'rb'))
-    #rb_mean = pickle.load(open('gb_mean.sav', 'rb'))
-    #rb_upper = pickle.load(open('gb_upper.sav', 'rb'))
     all_models = pickle.load(open('all_models.sav', 'rb'))
     lb = all_models['q 0.20'].predict(X)
     pred = all_models['q 0.50'].predict(X)
@@ -354,12 +351,12 @@ else:
         
     
     if og!=de:
-        low, mean, high = get_pi(pd.DataFrame(df_pred))
+        low, median, high = get_pi(pd.DataFrame(df_pred))
         with col1:
             st.metric("Low", f'${low}',"+$",delta_color="inverse")
-            st.metric("Mean", f'${mean}')
+            st.metric("Median", f'${median}')
             st.metric("High", f'${high}',"-$",delta_color="inverse")
-            df_interval = pd.DataFrame([[low,mean,high]],columns=['Low','Mean','High'])
+            df_interval = pd.DataFrame([[low,median,high]],columns=['Low','Median','High'])
 
         with st.expander("See price distribution"):
             # plot price dist
@@ -371,8 +368,8 @@ else:
             #).transform_filter(
             ).interactive()
 
-            mean = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
-                x='Mean:Q',
+            Median = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
+                x='Median:Q',
                 size=alt.value(4),
                 
             )
