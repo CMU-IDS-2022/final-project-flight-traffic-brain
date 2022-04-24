@@ -146,7 +146,160 @@ def get_slice_membership(df, ogstate=None, destate=None, ogcity=None, destcity=N
         labels &= df['AirlineCompany'].isin(airline)
     return labels
 
-        
+    
+
+# ------------ Delay Analysis starts ---------------------
+
+
+st.title("Flight Delay Analysis")
+
+ad = AirData()
+flight_df = ad.get_flights_df()
+
+st.header("Slice Data")
+st.write("You can filter the airline data by choosing the different departure airport.")
+with st.expander("Airports"):
+    origin_airport_list = flight_df['origin_airport_iata'].drop_duplicates()
+    option1 = st.selectbox("Departure Airport:",
+                            (origin_airport_list))
+    flight_df_selected1 = flight_df[(flight_df['origin_airport_iata'] == option1)]
+
+st.header("Data Visualization")
+with st.expander("Flight delay from different departure airports"):
+    st.write("This data indicates all the current flights coming from the departure airport and their related delay times.")
+    index = 0
+    for row in flight_df_selected1.iterrows():
+        flight_number = flight_df_selected1['number'].values[index]
+        option_id = flight_df_selected1['id'].values[index]
+        option_detail = ad.get_flight_details(option_id)
+        option_time = option_detail['time']
+        if option_time['real']['departure'] is None:
+            continue
+        elif option_time['real']['arrival'] is None:
+            depart_delta = option_time['real']['departure'] - option_time['scheduled']['departure']
+            arrive_delta = None
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Flight number",
+                        flight_number)
+            col2.metric("Departure delay",
+                        parse_time_hms(depart_delta))
+            col3.metric("Arrival delay",
+                        arrive_delta)
+        else:
+            depart_delta = option_time['real']['departure'] - option_time['scheduled']['departure']
+            arrive_delta = option_time['real']['arrival'] - option_time['scheduled']['arrival']
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Flight number",
+                        flight_number)
+            col2.metric("Departure delay",
+                        parse_time_hms(depart_delta))
+            col3.metric("Arrival delay",
+                        parse_time_hms(arrive_delta))   
+        index = index + 1 
+
+with st.expander("Flight delay of different airlines"):
+    st.write("This data compares the punctuality and departure delay times between different airlines.")
+    depart_delay = []
+    index = 0
+    for row in flight_df_selected1.iterrows():
+        option_id = flight_df_selected1['id'].values[index]
+        option_detail = ad.get_flight_details(option_id)
+        option_time = option_detail['time']
+        if option_time['real']['departure'] is None:
+            continue
+        else:
+            depart_delta = option_time['real']['departure'] - option_time['scheduled']['departure']
+            depart_delta = parse_time_hms(depart_delta)
+            depart_delay.append(depart_delta)
+            index = index + 1    
+    flight_df_selected1['depart_delay'] = depart_delay
+    stripplot = alt.Chart(flight_df_selected1, width=640).mark_circle(size=30).encode(
+        x=alt.X(
+            'depart_delay',
+            title='Departure delay',
+            scale=alt.Scale()),
+        y=alt.Y(
+            'airline_iata',
+            title='Airline iata'),
+        color=alt.Color('airline_iata', legend=alt.Legend(orient="right")),
+        tooltip=['number', 'airline_iata', 'depart_delay']
+    ).transform_calculate(
+        jitter='sqrt(-2*log(random()))*cos(2*PI*random())'
+    ).configure_facet(
+        spacing=0
+    ).configure_view(
+        stroke=None
+    )
+
+    stripplot
+
+with st.expander("Compare average departure delay of different airlines"):
+    depart_delay = []
+    index = 0
+    for row in flight_df_selected1.iterrows():
+        option_id = flight_df_selected1['id'].values[index]
+        option_detail = ad.get_flight_details(option_id)
+        option_time = option_detail['time']
+        if option_time['real']['departure'] is None:
+            continue
+        else:
+            depart_delta = option_time['real']['departure'] - option_time['scheduled']['departure']
+            # depart_delta = parse_time_hms(depart_delta)
+            depart_delay.append(depart_delta)
+            index = index + 1    
+    flight_df_selected1['depart_delay'] = depart_delay
+
+    average_delay = []
+    airline_average_delay_parsed = []
+    index = 0
+    for row in flight_df_selected1.iterrows():
+        ite_airline = flight_df_selected1['airline_iata'].values[index]
+        airline_data = flight_df_selected1[flight_df_selected1['airline_iata'] == ite_airline]
+        airline_average_delay = airline_data['depart_delay'].mean()
+        average_delay_parsed = parse_time_hms(airline_average_delay)
+        airline_average_delay = round(airline_average_delay, 2)
+        # airline_average_delay = parse_time_hms(airline_average_delay)
+        average_delay.append(airline_average_delay)
+        airline_average_delay_parsed.append(average_delay_parsed)
+        index = index + 1
+    flight_df_selected1['airline_average_delay'] = average_delay
+    flight_df_selected1['average_delay_parsed'] = airline_average_delay_parsed
+    flight_df_selected2 = flight_df_selected1.drop_duplicates(subset=['airline_iata'], keep='first')
+    flight_df_selected2 = flight_df_selected2.sort_values(by=['airline_average_delay'], ascending=True)
+
+    barchart = alt.Chart(flight_df_selected2, width=640).mark_bar().encode(
+        x=alt.X('airline_average_delay', axis=alt.Axis(labels=False)),
+        y=alt.Y('airline_iata', sort=alt.EncodingSortField(field="airline_average_delay", op="count", order='ascending')),
+        tooltip=['airline_iata', 'depart_delay']
+    )
+    text = barchart.mark_text(
+        align='left',
+        baseline='middle',
+        dx=3  # Nudges text to right so it doesn't appear on top of the bar
+    ).encode(
+        text='average_delay_parsed'
+    )
+    (barchart + text).properties(height=900)
+    barchart + text
+
+    index = 0
+    for row in flight_df_selected2.iterrows():
+        ite_airline = flight_df_selected2['airline_iata'].values[index]
+        ite_delay = flight_df_selected2['average_delay_parsed'].values[index]
+        # ite_delay = parse_time_hms(ite_delay)
+        ite_delay = str(ite_delay).rstrip(':0')
+        col1, col2 = st.columns(2)
+        col1.metric("Airline",
+                    ite_airline)
+        col2.metric("Average departure delay",
+                    ite_delay)
+        index = index + 1
+
+# ------------ Delay Analysis ends ---------------------
+
+
+
+
 # ------------------------ Flight price prediction starts ------------------------------    
 ## Price Prediction 
 st.title("Flight Price Prediction")
