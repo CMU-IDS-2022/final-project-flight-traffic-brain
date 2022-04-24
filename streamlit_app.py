@@ -35,13 +35,14 @@ df_viz = pd.read_csv('df_viz.csv').iloc[:,:]
 
 # fit the prediction model, get mean and prediction interval
 def get_pi(X):
-    rb_lower = pickle.load(open('gb_lower.sav', 'rb'))
-    rb_mean = pickle.load(open('gb_mean.sav', 'rb'))
-    rb_upper = pickle.load(open('gb_upper.sav', 'rb'))
-    lb = rb_lower.predict(X)
-    mean = rb_mean.predict(X)
-    ub = rb_upper.predict(X)
-    return (round(np.exp(lb[0]),2), round(np.exp(mean[0]),2), round(np.exp(ub[0]),2))
+    #rb_lower = pickle.load(open('gb_lower.sav', 'rb'))
+    #rb_mean = pickle.load(open('gb_mean.sav', 'rb'))
+    #rb_upper = pickle.load(open('gb_upper.sav', 'rb'))
+    all_models = pickle.load(open('all_models.sav', 'rb'))
+    lb = all_models['q 0.20'].predict(X)
+    pred = all_models['q 0.5'].predict(X)
+    ub = all_models['q 0.8'].predict(X)
+    return (round(np.exp(lb[0]),2), round(np.exp(pred[0]),2), round(np.exp(ub[0]),2))
 
 
 
