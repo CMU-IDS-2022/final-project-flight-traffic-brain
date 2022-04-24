@@ -47,7 +47,7 @@ def get_pi(X):
 
 
 # load data for non ML visual
-def load_data():
+def load_data_ml():
     return pd.read_csv('train_viz.csv').iloc[:,:]
     
 
@@ -65,31 +65,14 @@ def get_slice_destate(df, destate=None):
     return labels
 
 
-def get_slice_ogcity(df, ogcity=None):
-    labels = pd.Series([1] * len(df), index=df.index)
-    labels &= df['ogCity'] == ogcity
-    return labels
-
-
-def get_slice_destcity(df, destcity=None):
-    labels = pd.Series([1] * len(df), index=df.index)
-    labels &= df['destCity'] == destcity
-    return labels
-
-def get_slice_membership(df, ogstate=None, destate=None, ogcity=None, destcity=None, quarter=None, airline=None):
+def get_slice_membership(df, ogstate=None, destate=None, quarter=None):
     labels = pd.Series([1] * len(df), index=df.index)
     if ogstate:
         labels &= df['OriginState'] == ogstate
     if destate is not None:
         labels &= df['DestState'] == destate
-    if ogcity:
-        labels &= df['ogCity'].isin(ogcity)
-    if destcity:
-        labels &= df['destCity'].isin(destcity)
     if quarter:
         labels &= df['Quarter'].isin(quarter)
-    if airline:
-        labels &= df['AirlineCompany'].isin(airline)
     return labels
 
 #-------------------- Price Heat Map-------------------------------------------
@@ -416,26 +399,23 @@ else:
     # ------------------------ Flight price comparison starts ------------------------------           
     ## Price comparison
     st.title("Choose the flight you are interested in")
-    df = load_data()
+    df = load_data_ml()
 
 
     cols = st.columns(3)
     with cols[0]:
         ogstate = st.selectbox('Origin State', sorted(df['OriginState'].unique()))
-        slice_ogstates = get_slice_ogstate(df,ogstate)
-        ogcity = st.multiselect('Origin City', sorted(df[slice_ogstates]['ogCity'].unique()))
+        
 
     with cols[1]:  
         destate = st.selectbox('Destination State', sorted(df['DestState'].unique()))
-        slice_destates = get_slice_destate(df,destate)
-        destcity = st.multiselect('Destination City', sorted(df[slice_destates]['destCity'].unique()))
 
 
     with cols[2]:
         quarter = st.multiselect('Quarter',sorted(df['Quarter'].unique()))
-        airline = st.multiselect('Airline Company', sorted(df['AirlineCompany'].unique()))
+       
 
-    slice_labels = get_slice_membership(df, ogstate, destate, ogcity, destcity, quarter, airline)
+    slice_labels = get_slice_membership(df, ogstate, destate, quarter)
     slice_labels.name = "slice_membership"
 
     df_show = df[slice_labels].iloc[:,:][['PricePerTicket','og','dest','Quarter','AirlineCompany']].sort_values(by='PricePerTicket')
