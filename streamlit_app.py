@@ -313,13 +313,9 @@ else:
     df_pred = pd.DataFrame(0, index=np.arange(1), columns=features)
 
     col1, col2 = st.columns([3, 2])
-    with col2:
-        values = ['<select>',3, 5, 10, 15, 20, 30]
-        default_ix = values.index(30)
-        og = st.selectbox('Origin', values, index=default_ix)
-        
-        og = st.selectbox('Origin', np.array(origin))
-        de = st.selectbox('Destination', np.array(dest))
+    with col2:        
+        og = st.selectbox('Origin', np.array(origin),index=20)
+        de = st.selectbox('Destination', np.array(dest),index=30)
         season = st.selectbox('Season', ['Spring','Summer','Fall','Winter'])
         airline = st.selectbox('Airline Company', np.array(air))
         numT = st.slider('Number of tickets', 1, 15, 1)
@@ -330,7 +326,7 @@ else:
         if de != "Virgin Islands":
             df_pred[f'd{de}'] = 1
         else:
-            df_pred['dU.S. Virgin Islands']=1
+            df_pred['dU.S. Virgin Isands']31
         
         if season!='Spring':
             df_pred[quarter_dic[season]] = 1
@@ -408,11 +404,11 @@ else:
 
     cols = st.columns(3)
     with cols[0]:
-        ogstate = st.selectbox('Origin State', sorted(df['OriginState'].unique()))
+        ogstate = st.selectbox('Origin State', sorted(df['OriginState'].unique()),index=sorted(df['OriginState'].unique().index=(New York')))
         
 
     with cols[1]:  
-        destate = st.selectbox('Destination State', sorted(df['DestState'].unique()))
+        destate = st.selectbox('Destination State', sorted(df['DestState'].unique()),index=sorted(df['DestState'].unique().index=(California')))
 
 
     with cols[2]:
