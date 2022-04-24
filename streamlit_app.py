@@ -288,6 +288,31 @@ if df_show.empty:
 else:
     st.write(df_show)
 
+#-------------------- Price Heat Map-------------------------------------------
+def load_data(url):
+    file = url
+    df = pd.read_csv(file)
 
-    
+    return df
+
+df = load_data('train_viz.csv')
+st.title("Flight Price Heatmap among states")
+
+# Take top 20 frequency states
+statelist = ['California','Florida','Texas','New York','Georgia','Illinois','Nevada','Virginia','Massachusetts',
+             'Washington','Pennsylvania','Arizona','New Jersey','Minnesota','Michigan','Missouri','Maryland','Hawaii']
+heat_price = df[df['OriginState'].isin(statelist) ]
+heat_price = heat_price[heat_price['DestState'].isin(statelist) ]
+# Take average price and miles per route
+heat_price = heat_price.groupby(['OriginState','DestState'])[['PricePerTicket','Miles']].mean().reset_index()
+# Drop the invalid value(origin = destination)
+heat_price = heat_price[heat_price['OriginState'] != heat_price['DestState']]
+
+heatmap = alt.Chart(heat_price).mark_rect().encode(
+    x='OriginState:O',
+    y='DestState:O',
+    color='PricePerTicket:Q',
+    tooltip=['OriginState', 'DestState', 'PricePerTicket','Miles']
+)
+st.altair_chart(heatmap)  
 
