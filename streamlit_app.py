@@ -385,10 +385,10 @@ else:
                 #strokeDash='Quarter'
             )
 
-            high = alt.Chart(df_interval.sample(1)).mark_rule(color='darkblue',tooltip=True).encode(
+            high = alt.Chart(df_interval.sample(1)).mark_rule(color='darkblue').encode(
                 x='High:Q',
                 size=alt.value(2),
-                #tooltip = 'PricePerTicket'
+                tooltip = 'PricePerTicket'
                 #strokeDash='Quarter'
             )
             price_chart = bar + mean + low+ high
