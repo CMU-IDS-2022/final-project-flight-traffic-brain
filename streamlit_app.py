@@ -89,7 +89,7 @@ menu_selection =  st.sidebar.radio("Menu", ["Flight Map", "Flight Delay Analysis
                                             "Flight Price"])
 if menu_selection == "Flight Map":
 
-    st.title("Real-time Flight Data Visualization with Maps and Charts")
+    st.title("Real-time Flight Data Visualization")
     # ------------ Map starts ---------------------
 
     with st.sidebar.expander("Analysis for flights/airports"):
@@ -100,19 +100,28 @@ if menu_selection == "Flight Map":
         else:
             field = st.selectbox("Variable of interest", ["origin_airport_iata", "destination_airport_iata"])
 
+    st.write("This is a map of real-time flights and airports. The blue circles are \
+            the airport, while the red squares are the flights. You can utilize \
+            the tool bar on the left tab to explore the data. You can also \
+            move your mouse over the map to see more information.")
     map_air = create_map(flight_df, field, to_show)
 
     st.altair_chart(map_air)
 
     st.sidebar.title("Note")
 
-    st.sidebar.write("This is a temporary note.")
+    st.sidebar.write("This visualization consists of three components.\
+        The first component is a map that shows real-time flights and airports\
+        in the U.S. The second component, linked to the first component, \
+        is an analysis tool for the real-time flight and airport data. \
+        The third component displays the time information of a flight.")
 
     # ------------ Map ends ---------------------
 
 
     # ------------ Flight time starts ---------------------
 
+    st.write("Here we display the time information of a flight.")
 
     option = st.selectbox("Which flight number are you looking into?",
                             flight_df['number'].sort_values())
