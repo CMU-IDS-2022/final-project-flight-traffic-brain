@@ -408,7 +408,7 @@ else:
     # ------------------------ Flight price comparison starts ------------------------------           
     ## Price comparison
     st.header("Check the historical information of the flight you are interested in")
-    st.header('We will look at some historical data in 2018.')
+    st.write('We will look at some historical data in 2018.')
     df = load_data_ml()
 
 
