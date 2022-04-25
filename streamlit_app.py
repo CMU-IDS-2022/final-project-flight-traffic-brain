@@ -499,5 +499,39 @@ else:
 
     st.altair_chart(alt.vconcat(heat,box))
 
-    
+    origin = st.selectbox('Origin', sorted(df['OriginState'].unique()))
+    def origin_data(origin,df):
+        subset = df[df['OriginState']==origin]
+        subset = subset.groupby(['OriginState','DestState'])[['PricePerTicket','Miles']].mean().reset_index()
+        merged = subset.merge(data.income().groupby('name').mean().reset_index(), how = 'inner', left_on ='DestState', right_on= 'name')
+        return merged
+
+    subset = origin_data(origin,df)
+    pts = alt.selection(type="multi", encodings=['x','y'])
+
+    heat = alt.Chart(subset).mark_rect().encode(
+        x='DestState:O',
+        y='OriginState:O',
+        color=alt.condition(pts,'PricePerTicket:Q', alt.ColorValue("grey")),
+        tooltip=['OriginState', 'DestState', 'PricePerTicket','Miles']
+    ).add_selection(pts)
+
+
+    source = data.income.url
+    merged = heat_price.merge(data.income(), how = 'left', left_on ='OriginState', right_on= 'name')
+    map = alt.Chart(subset).mark_geoshape().encode(
+        shape='geo:G',
+        color=alt.condition(pts, 'name:N', alt.value('lightgray')),
+        tooltip=['PricePerTicket:Q','DestState']
+    ).transform_lookup(
+        lookup='id',
+        from_=alt.LookupData(data=states, key='id'),
+        as_='geo'
+    ).properties(
+        width=500,
+        height=400,
+    ).project(
+        type='albersUsa'
+    )
+    st.altair_chart(alt.vconcat(heat, map))
 
