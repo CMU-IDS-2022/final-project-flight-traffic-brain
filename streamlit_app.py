@@ -519,12 +519,11 @@ else:
 
     states = alt.topo_feature(data.us_10m.url, 'states')
     
-    background = alt.Chart(world).mark_geoshape(
+    background = alt.Chart(states).mark_geoshape(
         fill='lightgray',
         stroke='white'
     ).properties(
-        title='Cumulative Wealth over the World',
-        width=700,
+        width=500,
         height=400
     ).project('naturalEarth1')
     
