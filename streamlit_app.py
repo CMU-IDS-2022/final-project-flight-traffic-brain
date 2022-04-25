@@ -497,9 +497,11 @@ else:
         pts
     )
     
-    st.header("Compare the price of different destination based on the origin you choose")
+    
 
     st.altair_chart(alt.vconcat(heat,box))
+    
+    st.header("Compare the price of different destination based on the origin you choose")
 
     origin = st.selectbox('Origin', sorted(df['OriginState'].unique()))
     def origin_data(origin,df):
