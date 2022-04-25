@@ -496,6 +496,8 @@ else:
     ).transform_filter(
         pts
     )
+    
+    st.header("Compare the price of different destination based on the origin you choose")
 
     st.altair_chart(alt.vconcat(heat,box))
 
@@ -509,7 +511,7 @@ else:
     subset = origin_data(origin,df)
     pts = alt.selection(type="multi", encodings=['x','y'])
 
-    heat = alt.Chart(subset).mark_rect().encode(
+    heat_bar = alt.Chart(subset).mark_rect().encode(
         x='DestState:O',
         y='OriginState:O',
         color=alt.condition(pts,'PricePerTicket:Q', alt.ColorValue("grey")),
@@ -544,5 +546,5 @@ else:
     
     map = background + foreground
     
-    st.altair_chart(alt.vconcat(heat, map))
+    st.altair_chart(alt.vconcat(heat_bar, map))
 
