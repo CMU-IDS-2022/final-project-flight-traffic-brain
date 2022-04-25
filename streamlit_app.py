@@ -525,7 +525,7 @@ else:
     ).properties(
         width=500,
         height=400
-    ).project('naturalEarth1')
+    ).project('albersUsa')
     
     foreground = alt.Chart(subset).mark_geoshape().encode(
         shape='geo:G',
