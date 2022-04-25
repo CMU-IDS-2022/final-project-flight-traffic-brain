@@ -7,7 +7,7 @@ import numpy as np
 from map import create_map
 from airdata import AirData
 from utils import parse_time, parse_time_hms
-
+from vega_datasets import data
 
 # Getting data ready
 @st.cache
