@@ -520,8 +520,7 @@ else:
     states = alt.topo_feature(data.us_10m.url, 'states')
     
     background = alt.Chart(states).mark_geoshape(
-        fill='lightgray',
-        stroke='white'
+        fill='lightgray'
     ).properties(
         width=500,
         height=400
