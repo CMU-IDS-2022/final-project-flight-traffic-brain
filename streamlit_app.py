@@ -520,7 +520,8 @@ else:
     states = alt.topo_feature(data.us_10m.url, 'states')
     
     background = alt.Chart(states).mark_geoshape(
-        fill='lightgray'
+        fill='lightgray',
+        stroke='white'
     ).properties(
         width=500,
         height=400
@@ -528,7 +529,7 @@ else:
     
     foreground = alt.Chart(subset).mark_geoshape().encode(
         shape='geo:G',
-        color=alt.condition(pts, 'name:N', alt.value('lightgray')),
+        color=alt.condition(pts, 'name:N', alt.encoding(fill='lightgray',stroke='white')),
         tooltip=['OriginState', 'DestState', 'PricePerTicket','Miles']
     ).transform_lookup(
         lookup='id',
