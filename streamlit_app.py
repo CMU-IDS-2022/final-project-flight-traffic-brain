@@ -517,8 +517,8 @@ else:
     ).add_selection(pts)
 
 
-    source = data.income.url
-    merged = heat_price.merge(data.income(), how = 'left', left_on ='OriginState', right_on= 'name')
+    states = alt.topo_feature(data.us_10m.url, 'states')
+    
     map = alt.Chart(subset).mark_geoshape().encode(
         shape='geo:G',
         color=alt.condition(pts, 'name:N', alt.value('lightgray')),
