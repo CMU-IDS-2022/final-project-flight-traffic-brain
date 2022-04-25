@@ -529,7 +529,8 @@ else:
     
     foreground = alt.Chart(subset).mark_geoshape().encode(
         shape='geo:G',
-        color=alt.condition(pts, 'name:N', alt.value('lightgray')),
+        #color=alt.condition(pts, 'name:N', alt.value('lightgray')),
+        color = alt.Color('name:N'),#),
         tooltip=['OriginState', 'DestState', 'PricePerTicket','Miles']
     ).transform_lookup(
         lookup='id',
