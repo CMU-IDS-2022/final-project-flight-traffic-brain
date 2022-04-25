@@ -451,7 +451,7 @@ else:
     df_show['Price per Ticket ($)'] = df_show['Price per Ticket ($)'].apply(lambda x: "{:.2f}".format(x))
     if df_show.empty:
         st.metric(" ", "No Historical Data Available")
-        st.write("Please deselect some quarter options or change origin/destination state.") 
+        st.write("Please deselect some quarter/airline options or change origin/destination state.") 
     else:
         st.write(df_show)
 
