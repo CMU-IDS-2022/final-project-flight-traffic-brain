@@ -519,7 +519,16 @@ else:
 
     states = alt.topo_feature(data.us_10m.url, 'states')
     
-    map = alt.Chart(subset).mark_geoshape().encode(
+    background = alt.Chart(world).mark_geoshape(
+        fill='lightgray',
+        stroke='white'
+    ).properties(
+        title='Cumulative Wealth over the World',
+        width=700,
+        height=400
+    ).project('naturalEarth1')
+    
+    foreground = alt.Chart(subset).mark_geoshape().encode(
         shape='geo:G',
         color=alt.condition(pts, 'name:N', alt.value('lightgray')),
         tooltip=['OriginState', 'DestState', 'PricePerTicket','Miles']
@@ -533,5 +542,8 @@ else:
     ).project(
         type='albersUsa'
     )
+    
+    map = background + foreground
+    
     st.altair_chart(alt.vconcat(heat, map))
 
