@@ -63,7 +63,7 @@ def get_slice_destate(df, destate=None):
     return labels
 
 
-def get_slice_membership(df, ogstate=None, destate=None, quarter=None):
+def get_slice_membership(df, ogstate=None, destate=None, quarter=None,airline=None):
     labels = pd.Series([1] * len(df), index=df.index)
     if ogstate:
         labels &= df['OriginState'] == ogstate
@@ -71,6 +71,8 @@ def get_slice_membership(df, ogstate=None, destate=None, quarter=None):
         labels &= df['DestState'] == destate
     if quarter:
         labels &= df['Quarter'].isin(quarter)
+    if airline:
+        labels &= df['AirlineCompany'].isin(airline)
     return labels
 
 #-------------------- Price Heat Map-------------------------------------------
@@ -423,7 +425,7 @@ else:
     df = load_data_ml()
 
 
-    cols = st.columns(3)
+    cols = st.columns(4)
     with cols[0]:
         ogs = sorted(df['OriginState'].unique())
         ogstate = st.selectbox('Origin State', ogs,index=ogs.index('New York'))
@@ -435,9 +437,13 @@ else:
 
     with cols[2]:
         quarter = st.multiselect('Quarter',sorted(df['Quarter'].unique()))
+        
+    with cols[3]:
+        airline = st.multiselect('Airline Company', sorted(df['AirlineCompany'].unique()))
+
        
 
-    slice_labels = get_slice_membership(df, ogstate, destate, quarter)
+    slice_labels = get_slice_membership(df, ogstate, destate, quarter,airline)
     slice_labels.name = "slice_membership"
 
     df_show = df[slice_labels].iloc[:,:][['PricePerTicket','og','dest','Quarter','AirlineCompany']].sort_values(by='PricePerTicket')
