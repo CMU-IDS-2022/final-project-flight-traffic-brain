@@ -86,7 +86,7 @@ def get_season(df, quarter):
     return sub
 
 menu_selection =  st.sidebar.radio("Menu", ["Flight Map", "Flight Delay Analysis", 
-                                            "Flight Price"])
+                                            "Flight Price Analysis"])
 if menu_selection == "Flight Map":
 
     st.title("Real-time Flight Data Visualization")
@@ -367,6 +367,7 @@ else:
     if og!=de:
         low, mean, high = get_pi(pd.DataFrame(df_pred))
         with col1:
+            st.subheader("Predicted Price per Ticket")
             st.metric("Low", f'${low}',"+$",delta_color="inverse")
             st.metric("Mean", f'${mean}')
             st.metric("High", f'${high}',"-$",delta_color="inverse")
