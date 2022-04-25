@@ -513,7 +513,7 @@ else:
         x='DestState:O',
         y='OriginState:O',
         color=alt.condition(pts,'PricePerTicket:Q', alt.ColorValue("grey")),
-        tooltip=['OriginState', 'DestState', 'PricePerTicket','Miles']
+        tooltip=['DestState']
     ).add_selection(pts)
 
 
@@ -522,7 +522,7 @@ else:
     map = alt.Chart(subset).mark_geoshape().encode(
         shape='geo:G',
         color=alt.condition(pts, 'name:N', alt.value('lightgray')),
-        tooltip=['PricePerTicket:Q','DestState']
+        tooltip=['OriginState', 'DestState', 'PricePerTicket','Miles']
     ).transform_lookup(
         lookup='id',
         from_=alt.LookupData(data=states, key='id'),
