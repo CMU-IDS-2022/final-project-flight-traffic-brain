@@ -384,7 +384,7 @@ else:
             ).properties(
                 title='Unit Price Distribution',
                 width=700, 
-                height=400)
+                height=400
             #).transform_filter(
             ).interactive()
 
