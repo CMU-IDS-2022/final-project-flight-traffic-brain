@@ -5,6 +5,19 @@
 
 Short (~250 words) abstract of the concrete data science problem and how the solutions addresses the problem.
 
+Nowadays, air traffic control has become a complicated task as there are more and more flights and airlines. There has also been rising cases of flight delays possibly due to poor management and massive volume of traffic. While air traffic is important to manage from the perspective of airports and airlines, flight prices are crucial for customers who usually make decisions of their travel plans based on them. In this project we hope to help airports better manage airlines and control airline traffic and passengers make wiser decisions about airline flights. Our exploration will be centered around 4 directions to offer help for both airports and passengers:
+
+
+1. **Design for Airports**
+    1) Create a flight network graph to visualize the connections between airports and flights
+    2) Develop a visualization tool to analyze potential delay time of certain flights
+
+2. **Design for Passengers**
+    1) Develop a ML model to predict flight prices
+    2) Provide passengers with flight planning recommendations based on information about major airports and flights using historical data
+
+
+
 ## Introduction
 Nowadays, air traffic control has become a complicated task as there are more and more flights and airlines. Because of the dependencies between flights, a delay in one can cause delays in other flights if they are not properly managed. An interactive data science solution can help alleviate this problem. A real-time map of flights with interactive information such as speed and altitude can help the specialists to make better decisions. Meanwhile, an interactive network graph that shows the connections between airports and flights can also improve the handling of dependencies among the traffic.
 
