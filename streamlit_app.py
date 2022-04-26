@@ -382,7 +382,9 @@ else:
                 alt.X('PricePerTicket:Q',title="Price per Ticket ($)"),#scale=alt.Scale(type='log')),
                 alt.Y('count()',title='Raw Frequency Count')
             ).properties(
-                title='Unit Price Distribution'
+                title='Unit Price Distribution',
+                width=700, 
+                height=400)
             #).transform_filter(
             ).interactive()
 
@@ -527,7 +529,7 @@ else:
         fill='lightgray',
         stroke='white'
     ).properties(
-        width=500,
+        width=700,
         height=400
     ).project('albersUsa')
     
@@ -540,7 +542,7 @@ else:
         from_=alt.LookupData(data=states, key='id'),
         as_='geo'
     ).properties(
-        width=500,
+        width=700,
         height=400,
     ).project(
         type='albersUsa'
