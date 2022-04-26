@@ -1,5 +1,30 @@
 from FlightRadar24.api import FlightRadar24API
 import pandas as pd
+import streamlit as st
+
+import time
+
+
+st_title = st.empty()
+st_progress_bar = st.empty()
+
+class tqdm:
+    def __init__(self, iterable, title=None):
+        if title:
+            st_title.write(title)
+        self.prog_bar = st_progress_bar.progress(0)
+        self.iterable = iterable
+        self.length = len(iterable)
+        self.i = 0
+
+    def __iter__(self):
+        for obj in self.iterable:
+            yield obj
+            self.i += 1
+            current_prog = self.i / self.length
+            self.prog_bar.progress(current_prog)
+
+
 
 
 class AirData:
@@ -46,8 +71,9 @@ class AirData:
         estimated_depart = []
         estimated_arrive = []
         eta = []
+        delayed = []
 
-        for fid in flights_ids:
+        for fid in tqdm(flights_ids, title="Fetching new data"):
             detail = self.get_flight_details(fid)
             time_info = detail['time']
             
@@ -59,6 +85,16 @@ class AirData:
             estimated_arrive.append(time_info['estimated']['arrival'])
             eta.append(time_info['other']['eta'])
 
+            # Delay or not?
+            actual_arrival_time = time_info['real']['arrival']
+            if not actual_arrival_time:
+                actual_arrival_time = time_info['estimated']['arrival']
+            scheduled_arrival_time = time_info['scheduled']['arrival']
+            if actual_arrival_time and scheduled_arrival_time and actual_arrival_time > scheduled_arrival_time:
+                delayed.append(True)
+            else:
+                delayed.append(False)
+
         flights_df['scheduled_depart'] = scheduled_depart
         flights_df['scheduled_arrive'] = scheduled_arrive
         flights_df['real_depart'] = real_depart
@@ -66,6 +102,10 @@ class AirData:
         flights_df['estimated_depart'] = estimated_depart
         flights_df['estimated_arrive'] = estimated_arrive
         flights_df['eta'] = eta
+        flights_df['is_delay'] = delayed
+        
+        st_title.empty()
+        st_progress_bar.empty()
 
         return flights_df
 

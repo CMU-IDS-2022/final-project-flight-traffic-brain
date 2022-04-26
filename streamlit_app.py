@@ -9,15 +9,21 @@ from airdata import AirData
 from utils import parse_time, parse_time_hms
 from vega_datasets import data
 
-# Getting data ready
-@st.cache
-def get_data():
+# Getting data ready, Refresh every hour (same data when user refreshes within an hour)
+@st.cache(ttl=60 * 60, suppress_st_warning=True)
+def get_AD_data():
     ad = AirData()
     flight_df = ad.get_flights_df()
+    flight_df = ad.add_time_to_df(flight_df)
     return ad, flight_df
 
+# Cache to prevent computation on every rerun
+@st.cache
+def save_AD_data(df):
+    return df.to_csv().encode('utf-8')
 
-ad, flight_df = get_data()
+
+ad, flight_df = get_AD_data()
 
 
 # Definitions for flight delay
@@ -117,6 +123,9 @@ if menu_selection == "Flight Map":
         in the U.S. The second component, linked to the first component, \
         is an analysis tool for the real-time flight and airport data. \
         The third component displays the time information of a flight.")
+
+    st.sidebar.download_button("Download real-time data", data=save_AD_data(flight_df),
+                        file_name='airdata.csv', mime='text/csv')
 
     # ------------ Map ends ---------------------
 

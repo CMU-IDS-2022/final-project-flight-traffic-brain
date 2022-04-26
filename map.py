@@ -144,9 +144,10 @@ def init_scatter_and_hist(flight_df, field, to_show, lookup_data):
         # Note: interval selection directly on map is not feasible: https://github.com/altair-viz/altair/issues/1232
         interval = alt.selection(type='interval')
         scatter = alt.Chart(flight_df).mark_point(size=2.0).encode(
-            alt.X("latitude", scale=alt.Scale(zero=False)),
-            alt.Y("longitude", scale=alt.Scale(zero=False)),
-            color = alt.condition(interval, alt.value("purple"), alt.value("grey")),
+            alt.X("latitude", scale=alt.Scale(zero=False), title="Flight latitude"),
+            alt.Y("longitude", scale=alt.Scale(zero=False), title="Flight longitude"),
+            # color = alt.condition(interval, alt.value("purple"), alt.value("grey")),
+            color=alt.Color('is_delay', legend=alt.Legend(title="Flight delayed or not", orient='right')),
             opacity = alt.condition(interval, alt.value(1), alt.value(0.2))
         ).add_selection(interval)
         hist = alt.Chart(flight_df).mark_bar(tooltip=True
@@ -157,9 +158,9 @@ def init_scatter_and_hist(flight_df, field, to_show, lookup_data):
     else: # "airport"
         interval = alt.selection(type='interval', empty='none')
         scatter = alt.Chart(flight_df).mark_point(size=2.0).encode(
-                alt.X("port_latitude:Q", scale=alt.Scale(zero=False)),
-                alt.Y("port_longitude:Q", scale=alt.Scale(zero=False)),
-                color = alt.condition(interval, alt.value("purple"), alt.value("grey")),
+                alt.X("port_latitude:Q", scale=alt.Scale(zero=False), title="Airport latitude"),
+                alt.Y("port_longitude:Q", scale=alt.Scale(zero=False), title="Airport longitude"),
+                color = alt.condition(interval, alt.value("grey"), alt.value("purple")),
                 opacity = alt.condition(interval, alt.value(1), alt.value(0.2))
                 ).transform_lookup(
                     lookup=field,
@@ -208,7 +209,7 @@ def create_map(flight_df, field, to_show):
 
     map_view = alt.layer(background, flight_from, airports_to,
                             airport_pts, flights_pts)
-    map_stat_view = alt.hconcat(scatter, hist)
-    map_airport = alt.vconcat(map_view, map_stat_view).configure_view(stroke=None)
+    map_stat_view = alt.hconcat(scatter, hist).resolve_scale(color='independent')
+    map_airport = alt.vconcat(map_view, map_stat_view).resolve_scale(color='independent').configure_view(stroke=None)
     return map_airport
 
