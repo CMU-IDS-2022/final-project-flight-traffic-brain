@@ -67,7 +67,9 @@ Below is an example of such a dataframe.
 
 #### Visualization
 
-We provide three components in this visualization part. The first component is a map that contains real-time flights and airports in the U.S. as shown above [todo]. The red squares are the flights and the blue circles are the airports, where their locations on the map are determined by their latitude and longitude. When the mouse hovers over a flight, relevant information regarding the flight will be displayed, including the flight number, source, and destination. More importantly, it will also show a network that includes other flights that go to the same destination. We believe this feature will enable the air traffic specialists to better understand and manage the air traffic. Similarly, when the mouse hovers over an airport, a network of incoming flights will be displayed as well as the number of them. 
+![Map](report_picture/map.JPG)
+
+We provide three components in this visualization part. The first component is a map that contains real-time flights and airports in the U.S. as shown above. The red squares are the flights and the blue circles are the airports, where their locations on the map are determined by their latitude and longitude. When the mouse hovers over a flight, relevant information regarding the flight will be displayed, including the flight number, source, and destination. More importantly, it will also show a network that includes other flights that go to the same destination. We believe this feature will enable the air traffic specialists to better understand and manage the air traffic. Similarly, when the mouse hovers over an airport, a network of incoming flights will be displayed as well as the number of them. 
 
 The second component is an analysis tool for the real-time flight and airport data. It is linked to the first component. It provides a scatter plot of flight/airport location, together with a rectangular brush that can select an interval of points. The selected points will be linked to the map above and the bar chart on the right. The link to the map above allows fine-grained analysis of the flight network, while the link to the bar chart enables exploration of variables of interest and interesting relationships.
 
@@ -134,14 +136,20 @@ For different airline companies, we used boxplot to visualize the percentile of 
 ### Real-time Flight Visualization
 
 
-We present a walkthrough that illustrates the effectiveness of real-time flight visualization. Suppose an air traffic specialist wants to manage the flights within a region. The specialist could select the group of flights using the rectangular brush in the scatter plot. On the right, it will show a bar chart of a relevant variable that the specialist wants to explore (Figure analysis1) . On the top, the map will highlight those selected flights, and the specialist could move his/her mouse over different flights to manage the network associated with a given flight (Figure analysis 2). 
+We present a walkthrough that illustrates the effectiveness of real-time flight visualization. Suppose an air traffic specialist wants to manage the flights within a region. The specialist could select the group of flights using the rectangular brush in the scatter plot. On the right, it will show a bar chart of a relevant variable that the specialist wants to explore. ![explore1](report_picture/exploration1.JPG)
+
+On the top, the map will highlight those selected flights, and the specialist could move his/her mouse over different flights to manage the network associated with a given flight. ![map2](report_picture/map_analysis2.jpg)
 
 This visualization part helps air traffic control specialists who want to better manage the traffic in the air. It also enables interesting explorations of interesting relationships in air traffic data. For example, different regions seem to exhibit different aircraft altitude distributions (exploration 1 jpg vs exploration 2). Big airports with many real-time flights are mostly located at the coastal side of the United States. The ground speed of all the flights seems to follow a normal distribution. One thing to note is that our dataset is limited in the number of features, so the explorations we can do are also limited by that. We believe this tool will be more useful with an enriched data source.
 
 
 ### Data Visualization Analysis of Flight Delay
 
-By filtering the flight data using the data slice tool, the users are able to view all the flight delay information of different airlines from the above selected departure airport. The first section offers users a list view of all the flight delays in real-time. The second section provides users with a stripplot figure visualization to compare not only the delay time of individual flight, but also the overall trends of delay time of different airlines [insert figure flight_delay_two]. The third section provides users with a bar chart to compare the average delay time of different airlines [insert figure flight_delay_three]. 
+By filtering the flight data using the data slice tool, the users are able to view all the flight delay information of different airlines from the above selected departure airport. The first section offers users a list view of all the flight delays in real-time. The second section provides users with a stripplot figure visualization to compare not only the delay time of individual flight, but also the overall trends of delay time of different airlines. 
+![Flight_delay_2](report_picture/flight_delay_two.png)
+
+The third section provides users with a bar chart to compare the average delay time of different airlines.
+![Flight_delay_3](report_picture/flight_delay_three.png)
 
 By looking at all three sections together, the users will get a clearer high-level picture of the state of delay and avoid biases. For instance, even though it seems that the AS airline has the highest average departure delay time as revealed by the third visualization figure, by looking at the second figure the user can then understand that the AS airline only has one flight, and yet other airlines such as the DL airline and UA airline has more flight with a high delay time. The juxtaposition of three sections together will offer users with a comprehensive overview of the states of departure delay of different airlines at a given time.
 
