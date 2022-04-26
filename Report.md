@@ -118,12 +118,44 @@ For different airline companies, we used boxplot to visualize the percentile of 
 
 ## Results and Discussion
 
+### Real-time Flight Visualization
+
+
+We present a walkthrough that illustrates the effectiveness of real-time flight visualization. Suppose an air traffic specialist wants to manage the flights within a region. The specialist could select the group of flights using the rectangular brush in the scatter plot. On the right, it will show a bar chart of a relevant variable that the specialist wants to explore (Figure analysis1) . On the top, the map will highlight those selected flights, and the specialist could move his/her mouse over different flights to manage the network associated with a given flight (Figure analysis 2). 
+
+This visualization part helps air traffic control specialists who want to better manage the traffic in the air. It also enables interesting explorations of interesting relationships in air traffic data. For example, different regions seem to exhibit different aircraft altitude distributions (exploration 1 jpg vs exploration 2). Big airports with many real-time flights are mostly located at the coastal side of the United States. The ground speed of all the flights seems to follow a normal distribution. One thing to note is that our dataset is limited in the number of features, so the explorations we can do are also limited by that. We believe this tool will be more useful with an enriched data source.
+
+
+### Data Visualization Analysis of Flight Delay
+
+By filtering the flight data using the data slice tool, the users are able to view all the flight delay information of different airlines from the above selected departure airport. The first section offers users a list view of all the flight delays in real-time. The second section provides users with a stripplot figure visualization to compare not only the delay time of individual flight, but also the overall trends of delay time of different airlines [insert figure flight_delay_two]. The third section provides users with a bar chart to compare the average delay time of different airlines [insert figure flight_delay_three]. 
+
+By looking at all three sections together, the users will get a clearer high-level picture of the state of delay and avoid biases. For instance, even though it seems that the AS airline has the highest average departure delay time as revealed by the third visualization figure, by looking at the second figure the user can then understand that the AS airline only has one flight, and yet other airlines such as the DL airline and UA airline has more flight with a high delay time. The juxtaposition of three sections together will offer users with a comprehensive overview of the states of departure delay of different airlines at a given time.
+
+### Flight Price
+
+By customizing flight information including origin state, destination state, through the gradient boosting regression model, we achieved R squared 0.33
+Among all features, numerical features like distance of miles, number of tickets are the most important. Although we may have the impression that origin and destination affect the ticket price a lot, they actually don’t have a very significant impact on price in reality. 
+
+During the experimentation of the flight price prediction tool, we find that in some cases, the predicted price does not fall in the 80% prediction interval. We believe the reason is that rather than hard coding and implementing the prediction interval formula, we utilize the loss=”quantile” feature in the sklearn GradientBoostingRegressor algorithm by specifying different value of alpha, by which the lower bound, predicted value, and upper bound are generated separately though using the same training data. This phenomenon further reinforces the degree of uncertainty in the flight price prediction task that we would like to convey to users who will use this prediction tool.
+
+We observed the seasonal trend of price. The overall flight ticket price is significantly higher in quarter 2, which might be caused by people’s high willingness in traveling. At the state level, both the number and price of flights tend to be higher among popular travel states like Hawaii. For different airline companies, the average price of small companies like Spirit Airline is lower, while the variance of price is higher of large companies like American Airline.
+
 
 ## Future Work
+
+We implemented the above visualizations with a relatively limited data source. Our data source is limited in the number of features, so the explorations we can do are also limited by that. We believe this tool will be more useful with an enriched data source.
+
+We also believe that Streamlit and Altair, though useful and easy-to-use for beginners, are lacking support for fine-grained customized operations/designs. For example, in the flight map, it is not possible to even add legends for points on the map. The visualizations could be more clear, interactive, and fine-grained if we use HTTP language such as Svelte instead.
+
+
 
 ## Reference
 
 [1] [Flightradar24: Live Flight Tracker - Real-Time Flight Tracker Map](https://www.flightradar24.com/)
+
 [2] [JeanExtreme002/FlightRadarAPI: API for Flight Radar 24 written in Python 3](https://github.com/JeanExtreme002/FlightRadarAPI)
+
 [3] [Flight price prediction with high R2](https://www.kaggle.com/code/anshigupta01/flight-price-prediction)
+
 [4] [Flight price prediction with low R2](https://github.com/Zernach/Airline-Price-Predictions)
