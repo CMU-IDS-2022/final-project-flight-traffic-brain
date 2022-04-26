@@ -383,7 +383,7 @@ else:
                 alt.Y('count()',title='Raw Frequency Count')
             ).properties(
                 title='Unit Price Distribution',
-                width=700, 
+                width=600, 
                 height=400
             #).transform_filter(
             ).interactive()
@@ -493,8 +493,8 @@ else:
         color=alt.Color('AirlineCompany')
 
     ).properties(
-        width=300,
-        height=200,
+        width=500,
+        height=300,
     ).transform_filter(
         pts
     )
@@ -529,7 +529,7 @@ else:
         fill='lightgray',
         stroke='white'
     ).properties(
-        width=700,
+        width=600,
         height=400
     ).project('albersUsa')
     
@@ -542,7 +542,7 @@ else:
         from_=alt.LookupData(data=states, key='id'),
         as_='geo'
     ).properties(
-        width=700,
+        width=600,
         height=400,
     ).project(
         type='albersUsa'
