@@ -181,7 +181,7 @@ def flight_map():
 
 
 #elif menu_selection == "Flight Delay Analysis":
-def flight_delay_analysis()
+def flight_delay_analysis():
     # ------------ Delay Analysis starts ---------------------
 
 
@@ -334,7 +334,7 @@ def flight_delay_analysis()
 
 
 #else:
-def flight_price_analysis:
+def flight_price_analysis():
     # ------------------------ Flight price prediction starts ------------------------------    
     ## Price Prediction 
     st.title("Flight Price Analysis")
