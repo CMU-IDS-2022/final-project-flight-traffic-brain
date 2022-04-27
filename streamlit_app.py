@@ -103,10 +103,11 @@ menu_selection =  st.sidebar.radio("Menu", ["Introduction","Flight Map", "Flight
 if menu_selection == 'Introduction':
     cols = st.columns(2)
     with cols[0]:
+        st.image("image/flight-logo.jpg", width=350)
+    with cols[1]:
         st.markdown("<h2 style='text-align: center; color: black;'>Flight Traffic Brain</h2>",
                 unsafe_allow_html=True)
-    with cols[1]:
-        st.image("image/flight-logo.jpg", width=150)
+    
        
     text = "<p style='font-size:18px'>Nowadays, air traffic control has become a complicated task as there are\
     more and more flights and airlines. There has also been rising cases of flight delays possibly due to poor\
