@@ -439,7 +439,7 @@ else:
     ## Price comparison
     st.header("Check the historical information of the flight you are interested in")
     st.write('We will look at some historical data in 2018.')
-    df = load_data_train()
+    df = load_data_viz()
 
 
     cols = st.columns(4)
