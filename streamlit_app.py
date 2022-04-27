@@ -11,7 +11,7 @@ from vega_datasets import data
 
 st.set_page_config(layout="wide")
 with st.sidebar:
-    st.image("image/air-travel.png", width=90, output_format="PNG")
+    st.image("image/air-travel2.png", width=90, output_format="PNG")
 
 
 
