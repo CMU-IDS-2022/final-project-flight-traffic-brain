@@ -154,7 +154,7 @@ elif menu_selection == "Flight Map":
             move your mouse over the map to see more information.")
     map_air = create_map(flight_df, field, to_show)
 
-    st.altair_chart(map_air)
+    st.altair_chart(map_air,use_container_width=True)
 
     st.sidebar.title("Note")
 
