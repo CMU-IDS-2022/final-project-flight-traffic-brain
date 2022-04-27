@@ -601,3 +601,12 @@ else:
     map = background + foreground
     
     st.altair_chart(alt.vconcat(heat_bar, map))
+    
+    st.sidebar.title("Note")
+
+    st.sidebar.write("This flight price analysis consists of four components.\
+        The first component is a flight customization section with predicted price range \
+        against historical price distribution\
+        The second component presents a table of customized historical flights of interest. \
+        The third component displays the historical average flight price by route and airline company\
+        The fourth component...")
