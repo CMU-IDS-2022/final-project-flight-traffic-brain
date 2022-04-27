@@ -56,7 +56,7 @@ def get_pi(X):
 
 
 # load data for non ML visual
-def load_data_train():
+def load_data_viz():
     return pd.read_csv('flight-price/train_viz.csv').iloc[:,:]
     
 
@@ -340,7 +340,7 @@ else:
     st.write("Tell us your intended flight information and get predicted flight price value and range.")
     
 
-    X_train=load_data_train()
+    X_train=load_data('flight-price/X_train.csv')
     features = list(X_train.columns)
     del X_train
     df_pred = pd.DataFrame(0, index=np.arange(1), columns=features)
