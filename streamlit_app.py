@@ -106,14 +106,14 @@ if menu_selection == 'Introduction':
     col3.markdown("<h1 style='text-align: left; color: #072F5F;'>Flight Traffic Brain</h1>",
             unsafe_allow_html=True)
 
-       
+    col1, col2, col3 = st.columns([1, 6, 1])   
     text = "<p style='font-size:18px'>Nowadays, air traffic control has become a complicated task as there are\
     more and more flights and airlines. There has also been rising cases of flight delays possibly due to poor\
     management and massive volume of traffic. While air traffic is important to manage from the perspective of\
     airports and airlines, flight prices are crucial for customers who usually make decisions of their travel\
     plans based on them. In this project we hope to help airports better manage airlines and control airline\
     traffic and passengers make wiser decisions about airline flights. </p>"
-    st.write(text, unsafe_allow_html=True)
+    col2.write(text, unsafe_allow_html=True)
     
 
     
