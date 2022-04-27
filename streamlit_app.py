@@ -115,14 +115,14 @@ if menu_selection == 'Introduction':
     traffic and passengers make wiser decisions about airline flights.</p>" 
     st.write(text, unsafe_allow_html=True)
     
-    text = "<p style='font-size:18px'>A <span style='color: #072F5F'> real-time map </span> of flights with interactive information such as speed and altitude can help the specialists\
-    to make better decisions. Meanwhile, an <span style='color: #072F5F'> interactive network graph </span> that shows the connections between airports and\
-    flights can also improve the handling of dependencies among the traffic. A <span style='color: #072F5F'> data visualization section of delay time </span>\
+    text = "<p style='font-size:18px'>A <span style='color: #1167b1'> real-time map </span> of flights with interactive information such as speed and altitude can help the specialists\
+    to make better decisions. Meanwhile, an <span style='color: #1167b1'> interactive network graph </span> that shows the connections between airports and\
+    flights can also improve the handling of dependencies among the traffic. A <span style='color: #1167b1'> data visualization section of delay time </span>\
     can also enable users to analyze different flights in real time and in more detail. By filtering the flight according to their\
     departure airport, the users can not only view the delay time of different flights, but also have a high-level overview of\
     the delay information of flights of different airlines. This information will help airport specialists to better communicate\
-    with the airports and passengers, and make better decisions in terms of resource distribution. In addition, a <span style='color: #072F5F'> \
-    machine learning model using </span> historical data to <span style='color: #072F5F'> predict flight price </span> can help passengers\
+    with the airports and passengers, and make better decisions in terms of resource distribution. In addition, a <span style='color: #1167b1'> \
+    machine learning model using </span> historical data to <span style='color: #1167b1'> predict flight price </span> can help passengers\
     estimate the potential fare of flight of their interest. It can also allow them to compare different flight prices by modifying parameters of interest,\
     thus helping optimize their travel plan.</p>"
     st.write(text, unsafe_allow_html=True)
