@@ -9,13 +9,6 @@ from airdata import AirData
 from utils import parse_time, parse_time_hms
 from vega_datasets import data
 
-st.set_page_config(layout="wide")
-with st.sidebar:
-    st.image("image/air-travel2.png", width=90, output_format="PNG")
-
-
-
-
 # Getting data ready, Refresh every hour (same data when user refreshes within an hour)
 @st.cache(ttl=60 * 60, suppress_st_warning=True)
 def get_AD_data():
@@ -37,18 +30,18 @@ ad, flight_df = get_AD_data()
 
 ## Prepare data
 # load in files
-origin = pickle.load(open('flight-price/DestState.sav','rb'))
-dest = pickle.load(open('flight-price/DestState.sav','rb'))
-air = pickle.load(open('flight-price/AirlineCompany.sav','rb'))
-miles_dic = pickle.load(open('flight-price/miles_dic.sav','rb'))
+origin = pickle.load(open('DestState.sav','rb'))
+dest = pickle.load(open('DestState.sav','rb'))
+air = pickle.load(open('AirlineCompany.sav','rb'))
+miles_dic = pickle.load(open('miles_dic.sav','rb'))
 quarter_dic= {'Spring':'Q1','Summer':'Q2','Fall':'Q3','Winter':'Q4'}
-df_viz = pd.read_csv('flight-price/df_viz.csv').iloc[:,:]
+df_viz = pd.read_csv('df_viz.csv').iloc[:,:]
 
 
 
 # fit the prediction model, get prediction and prediction interval
 def get_pi(X):
-    all_models = pickle.load(open('flight-price/all_models.sav', 'rb'))
+    all_models = pickle.load(open('all_models.sav', 'rb'))
     lb = all_models[0].predict(X)
     pred = all_models[2].predict(X)
     ub = all_models[1].predict(X)
@@ -58,8 +51,8 @@ def get_pi(X):
 
 
 # load data for non ML visual
-def load_data_viz():
-    return pd.read_csv('flight-price/train_viz.csv').iloc[:,:]
+def load_data_ml():
+    return pd.read_csv('train_viz.csv').iloc[:,:]
     
 
 # visual for price comparison
@@ -100,11 +93,10 @@ def get_season(df, quarter):
 
     return sub
 
-
-
 menu_selection =  st.sidebar.radio("Menu", ["Flight Map", "Flight Delay Analysis", 
                                             "Flight Price Analysis"])
 if menu_selection == "Flight Map":
+
     st.title("Real-time Flight Data Visualization")
     # ------------ Map starts ---------------------
 
@@ -180,6 +172,7 @@ if menu_selection == "Flight Map":
 
 
 elif menu_selection == "Flight Delay Analysis":
+
     # ------------ Delay Analysis starts ---------------------
 
 
@@ -332,22 +325,23 @@ elif menu_selection == "Flight Delay Analysis":
 
 
 else:
+
     # ------------------------ Flight price prediction starts ------------------------------    
     ## Price Prediction 
     st.title("Flight Price Analysis")
-
+    
     # 1. ML prediction
     st.header("Flight Price Prediction")
     st.write("Tell us your intended flight information and get predicted flight price value and range.")
+    
 
-
-    X_train=load_data('flight-price/X_train.csv')
+    X_train=pd.read_csv('X_train.csv')
     features = list(X_train.columns)
     del X_train
     df_pred = pd.DataFrame(0, index=np.arange(1), columns=features)
 
     col1, col2 = st.columns([3, 2])
-
+    
     with col2:        
         og = st.selectbox('Origin', np.array(origin),index=30)
         de = st.selectbox('Destination', np.array(dest),index=4)
@@ -362,13 +356,13 @@ else:
             df_pred[f'd{de}'] = 1
         else:
             df_pred['dU.S. Virgin Islands']=1
-
+        
         if season!='Spring':
             df_pred[quarter_dic[season]] = 1
-
+        
         if airline[-3:-1]!='AA':
             df_pred[airline[-3:-1]] = 1  
-
+        
         df_pred['NumTicketsOrdered'] = numT
 
 
@@ -380,8 +374,8 @@ else:
             df_pred['log_miles']=np.log(miles)
         else:
             st.markdown(" ")
-
-
+        
+    
     if og!=de:
         low, mean, high = get_pi(pd.DataFrame(df_pred))
         with col1:
@@ -390,7 +384,7 @@ else:
             st.metric("Mean", f'${mean}')
             st.metric("High", f'${high}',"-$",delta_color="inverse")
             df_interval = pd.DataFrame([[low,mean,high]],columns=['Low','Mean','High'])
-
+            
         st.write("See where your flight falls in the historical price distribution (2018)")
         with st.expander("See price distribution"):
             # plot price dist
@@ -407,7 +401,7 @@ else:
             mean = alt.Chart(df_interval).mark_rule(color='purple',tooltip=True).encode(
                 x='Mean:Q',
                 size=alt.value(4),
-
+                
             )
 
             low = alt.Chart(df_interval.sample(1)).mark_rule(color='darkblue',tooltip=True).encode(
@@ -419,35 +413,35 @@ else:
             high = alt.Chart(df_interval.sample(1)).mark_rule(color='darkblue',tooltip=True).encode(
                 x='High:Q',
                 size=alt.value(2),
-
+          
                 #strokeDash='Quarter'
             )
             price_chart = bar + mean + low+ high
-
-
+            
+            
             st.altair_chart(price_chart)
-
+        
     else:
         with col1:
             st.metric(" ", 'Not Available')
             st.markdown("**Please choose a different origin or destination!**")
-
+            
     # ------------------------ Flight price prediction ends ------------------------------       
-
-
-
+            
+        
+        
     # ------------------------ Flight price comparison starts ------------------------------           
     ## Price comparison
     st.header("Check the historical information of the flight you are interested in")
     st.write('We will look at some historical data in 2018.')
-    df = load_data_viz()
+    df = load_data_ml()
 
 
     cols = st.columns(4)
     with cols[0]:
         ogs = sorted(df['OriginState'].unique())
         ogstate = st.selectbox('Origin State', ogs,index=ogs.index('New York'))
-
+        
     with cols[1]:  
         des = sorted(df['DestState'].unique())
         destate = st.selectbox('Destination State', des,index=des.index('California'))
@@ -455,11 +449,11 @@ else:
 
     with cols[2]:
         quarter = st.multiselect('Quarter',sorted(df['Quarter'].unique()))
-
+        
     with cols[3]:
         airline = st.multiselect('Airline Company', sorted(df['AirlineCompany'].unique()))
 
-
+       
 
     slice_labels = get_slice_membership(df, ogstate, destate, quarter,airline)
     slice_labels.name = "slice_membership"
@@ -475,8 +469,8 @@ else:
 
     # ------------------------ Flight price comparison starts ------------------------------ --------
 
-
-    df = load_data('flight-price/train_viz.csv')
+        
+    df = load_data('train_viz.csv')
     st.header("Choose the season you want to travel, find the most economical route and airline")
 
     quarter = st.selectbox('Season(Quarter)', sorted(df['Quarter'].unique()))
@@ -492,7 +486,7 @@ else:
     heat_price = heat_price.groupby(['OriginState','DestState'])[['PricePerTicket','Miles']].mean().reset_index()
     # Drop the invalid value(origin = destination)
     heat_price = heat_price[heat_price['OriginState'] != heat_price['DestState']]
-
+    
     pts = alt.selection(type="multi", encodings=['x','y'])
 
     heat = alt.Chart(heat_price).mark_rect().encode(
@@ -514,11 +508,11 @@ else:
     ).transform_filter(
         pts
     )
-
-
+    
+    
 
     st.altair_chart(alt.vconcat(heat,box))
-
+    
     st.header("Compare the price of different destination based on the origin you choose")
 
     origin = st.selectbox('Origin', sorted(df['OriginState'].unique()))
@@ -540,7 +534,7 @@ else:
 
 
     states = alt.topo_feature(data.us_10m.url, 'states')
-
+    
     background = alt.Chart(states).mark_geoshape(
         fill='lightgray',
         stroke='white'
@@ -548,7 +542,7 @@ else:
         width=600,
         height=400
     ).project('albersUsa')
-
+    
     foreground = alt.Chart(subset).mark_geoshape().encode(
         shape='geo:G',
         color=alt.condition(pts, 'name:N', alt.value('lightgray')),
@@ -563,7 +557,7 @@ else:
     ).project(
         type='albersUsa'
     )
-
+    
     map = background + foreground
-
+    
     st.altair_chart(alt.vconcat(heat_bar, map))
