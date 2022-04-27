@@ -459,7 +459,7 @@ else:
             price_chart = bar + mean + low+ high
             
             
-            st.altair_chart(price_chart)
+            st.altair_chart(price_chart,use_container_width=True)
         
     else:
         with col1:
@@ -505,7 +505,7 @@ else:
         st.metric(" ", "No Historical Data Available")
         st.write("Please deselect some quarter/airline options or change origin/destination state.") 
     else:
-        st.write(df_show)
+        st.dataframe(data=df_show)
 
     # ------------------------ Flight price comparison starts ------------------------------ --------
 
@@ -551,7 +551,7 @@ else:
     
     
 
-    st.altair_chart(alt.vconcat(heat,box))
+    st.altair_chart(alt.vconcat(heat,box),use_container_width=True)
     
     st.header("Compare the price of different destination based on the origin you choose")
 
@@ -600,7 +600,7 @@ else:
     
     map = background + foreground
     
-    st.altair_chart(alt.vconcat(heat_bar, map))
+    st.altair_chart(alt.vconcat(heat_bar, map),use_container_width=True)
     
     st.sidebar.title("Note")
 
