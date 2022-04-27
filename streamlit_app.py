@@ -223,6 +223,15 @@ elif menu_selection == "Flight Delay Analysis":
 
     st.title("Flight Delay Analysis")
 
+    st.sidebar.title("Note")
+
+    st.sidebar.write("This flight delay analysis aims to visualize the delay time of flights of different airlines and departure airports for the users in real time. \
+        This section includes four parts: The first part is a data slicing tool that allows the users to filter any flight data according to the different departure airport.\
+        The second part lists out all the flights flying from the selected departure airport, and displays the relevant delay time information of the flights. \
+        The third part displays a stripplot graph to allow the users to visually compare the different departure delay time of flights of different airlines.\
+        The last part compares the average delay time of different airlines. ")
+
+
     ad = AirData()
     flight_df = ad.get_flights_df()
 
