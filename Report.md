@@ -14,18 +14,18 @@ Nowadays, air traffic control has become a complicated task as there are more an
 
 2. **Design for Passengers**
     1) Develop a ML model to predict flight prices
-    2) Provide passengers with flight planning recommendations based on information about major airports and flights using historical data
+    2) Provide passengers with flight planning recommendations based on information about major origin/destination states and flights using historical data
 
 
 
 ## Introduction
 Nowadays, air traffic control has become a complicated task as there are more and more flights and airlines. Because of the dependencies between flights, a delay in one can cause delays in other flights if they are not properly managed. An interactive data science solution can help alleviate this problem. A real-time map of flights with interactive information such as speed and altitude can help the specialists to make better decisions. Meanwhile, an interactive network graph that shows the connections between airports and flights can also improve the handling of dependencies among the traffic.
 
-Besides the real-time interactive network graph, we also plan to develop a data visualization section to enable users to analyze the delay time of different flights in real time and in more detail. By filtering the flight according to their departure airport, the users can not only view the delay time of different flights, but also have a high-level overview of the delay information of flights of different airlines. This information will help airport specialists to better communicate with the airports and passengers, and make better decisions in terms of resource distribution.
+Besides the real-time interactive network graph, we also developed a data visualization section to enable users to analyze the delay time of different flights in real time and in more detail. By filtering the flight according to their departure airport, the users can not only view the delay time of different flights, but also have a high-level overview of the delay information of flights of different airlines. This information can help airport specialists to better communicate with the airports and passengers, and make better decisions in terms of resource distribution.
 
-Aside from delay time, we will build a ML model using historical data to predict flight price as well. Candidate parameters include airline code, flight time (flying hours, long-haul or short-haul), point of departure, destination, etc. This model will help passengers estimate the potential fare of flight of their interest. It will also allow them to compare different flight prices by modifying parameters of interest, thus helping optimize their travel plan.
+Aside from delay time, we built a ML model using historical data to predict flight price as well. This model can help passengers estimate the potential fare of flight of their interest. It can also allow them to compare different flight prices by modifying parameters of interest, thus helping optimize their travel plan.
 
-People are provided a lot of information about airlines when they plan trips. However, these pieces of information are quite disordered, which makes it difficult to choose. We hope to design a platform and help travelers design and plan trips. The interactive options include the place of departure and destination, date, price ranges they can accept, etc. We will visualize the recommended airlines in a map that mark the departure, destination, transition places, the airline routes. Users can also choose two specific airlines to compare features like price, duration, distance. We will visualize the comparison module through a jointed bar chart, in which each column represents a feature.
+People are provided a lot of information about airlines when they plan trips. However, these pieces of information are quite disordered, which makes it difficult to choose. Therefore, we designed a platform and help travelers design and plan trips as well. The interactive options include the place of departure and destination, date, price ranges they can accept, etc. We visualized the recommended airlines in a map that mark the departure, destination, transition places, the airline routes. Users can also choose two specific airlines to compare features like price, duration, distance. We visualized the comparison module through a jointed bar chart, in which each column represents a feature.
 
 ## Related Work
 
@@ -157,6 +157,7 @@ By looking at all three sections together, the users will get a clearer high-lev
 
 By customizing flight information including origin state, destination state, through the gradient boosting regression model, we achieved R squared 0.33
 Among all features, numerical features like distance of miles, number of tickets are the most important. Although we may have the impression that origin and destination affect the ticket price a lot, they actually don’t have a very significant impact on price in reality. 
+![FeatureImportance](report_picture/flight_price-feature_importance.png)
 
 During the experimentation of the flight price prediction tool, we find that in some cases, the predicted price does not fall in the 80% prediction interval. We believe the reason is that rather than hard coding and implementing the prediction interval formula, we utilize the loss=”quantile” feature in the sklearn GradientBoostingRegressor algorithm by specifying different value of alpha, by which the lower bound, predicted value, and upper bound are generated separately though using the same training data. This phenomenon further reinforces the degree of uncertainty in the flight price prediction task that we would like to convey to users who will use this prediction tool.
 
