@@ -590,7 +590,7 @@ def display_graph(selection):
     elif selection == "Flight Delay Analysis":
         flight_delay_analysis()
 
-    elif selection == 'Flight Price Analysis:
+    elif selection == "Flight Price Analysis":
         flight_price_analysis()
 
 display_graph(selector)        
