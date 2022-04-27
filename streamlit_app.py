@@ -30,18 +30,18 @@ ad, flight_df = get_AD_data()
 
 ## Prepare data
 # load in files
-origin = pickle.load(open('DestState.sav','rb'))
-dest = pickle.load(open('DestState.sav','rb'))
-air = pickle.load(open('AirlineCompany.sav','rb'))
-miles_dic = pickle.load(open('miles_dic.sav','rb'))
+origin = pickle.load(open('flight-price/DestState.sav','rb'))
+dest = pickle.load(open('flight-price/DestState.sav','rb'))
+air = pickle.load(open('flight-price/AirlineCompany.sav','rb'))
+miles_dic = pickle.load(open('flight-price/miles_dic.sav','rb'))
 quarter_dic= {'Spring':'Q1','Summer':'Q2','Fall':'Q3','Winter':'Q4'}
-df_viz = pd.read_csv('df_viz.csv').iloc[:,:]
+df_viz = pd.read_csv('flight-price/df_viz.csv').iloc[:,:]
 
 
 
 # fit the prediction model, get prediction and prediction interval
 def get_pi(X):
-    all_models = pickle.load(open('all_models.sav', 'rb'))
+    all_models = pickle.load(open('flight-price/all_models.sav', 'rb'))
     lb = all_models[0].predict(X)
     pred = all_models[2].predict(X)
     ub = all_models[1].predict(X)
@@ -51,8 +51,8 @@ def get_pi(X):
 
 
 # load data for non ML visual
-def load_data_ml():
-    return pd.read_csv('train_viz.csv').iloc[:,:]
+def load_data_viz():
+    return pd.read_csv('flight-price/train_viz.csv').iloc[:,:]
     
 
 # visual for price comparison
@@ -335,7 +335,7 @@ else:
     st.write("Tell us your intended flight information and get predicted flight price value and range.")
     
 
-    X_train=pd.read_csv('X_train.csv')
+    X_train=pd.read_csv('flight-price/X_train.csv')
     features = list(X_train.columns)
     del X_train
     df_pred = pd.DataFrame(0, index=np.arange(1), columns=features)
@@ -434,7 +434,7 @@ else:
     ## Price comparison
     st.header("Check the historical information of the flight you are interested in")
     st.write('We will look at some historical data in 2018.')
-    df = load_data_ml()
+    df = load_data_viz()
 
 
     cols = st.columns(4)
@@ -470,7 +470,7 @@ else:
     # ------------------------ Flight price comparison starts ------------------------------ --------
 
         
-    df = load_data('train_viz.csv')
+    df = load_data('flight-price/train_viz.csv')
     st.header("Choose the season you want to travel, find the most economical route and airline")
 
     quarter = st.selectbox('Season(Quarter)', sorted(df['Quarter'].unique()))
