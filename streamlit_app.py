@@ -282,6 +282,7 @@ elif menu_selection == "Flight Delay Analysis":
             airline_data = flight_df_selected1[flight_df_selected1['airline_iata'] == ite_airline]
             airline_average_delay = airline_data['depart_delay'].mean()
             average_delay_parsed = parse_time_hms(airline_average_delay)
+            average_delay_parsed = str(average_delay_parsed).rstrip(':0')
             airline_average_delay = round(airline_average_delay, 2)
             # airline_average_delay = parse_time_hms(airline_average_delay)
             average_delay.append(airline_average_delay)
@@ -290,12 +291,12 @@ elif menu_selection == "Flight Delay Analysis":
         flight_df_selected1['airline_average_delay'] = average_delay
         flight_df_selected1['average_delay_parsed'] = airline_average_delay_parsed
         flight_df_selected2 = flight_df_selected1.drop_duplicates(subset=['airline_iata'], keep='first')
-        flight_df_selected2 = flight_df_selected2.sort_values(by=['airline_average_delay'], ascending=True)
+        flight_df_selected2 = flight_df_selected2.sort_values(by=['airline_average_delay'], ascending=False)
 
         barchart = alt.Chart(flight_df_selected2, width=640).mark_bar().encode(
             x=alt.X('airline_average_delay', axis=alt.Axis(labels=False)),
             y=alt.Y('airline_iata', sort=alt.EncodingSortField(field="airline_average_delay", op="count", order='ascending')),
-            tooltip=['airline_iata', 'depart_delay']
+            tooltip=['airline_iata', 'average_delay_parsed']
         )
         text = barchart.mark_text(
             align='left',
