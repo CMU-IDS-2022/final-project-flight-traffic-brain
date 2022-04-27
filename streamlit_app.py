@@ -122,9 +122,9 @@ if menu_selection == 'Introduction':
     departure airport, the users can not only view the delay time of different flights, but also have a high-level overview of\
     the delay information of flights of different airlines. This information will help airport specialists to better communicate\
     with the airports and passengers, and make better decisions in terms of resource distribution. In addition, a <span style='color: #1167b1'> \
-    machine learning model using </span> historical data to <span style='color: #1167b1'> predict flight price </span> can help passengers\
-    estimate the potential fare of flight of their interest. It can also allow them to compare different flight prices by modifying parameters of interest,\
-    thus helping optimize their travel plan.</p>"
+    machine learning model </span> using historical data to <span style='color: #1167b1'> predict flight price </span> can help passengers\
+    estimate the potential fare of flight of their interest. An <span style='color: #1167b1'> interactive platform with visualizations of airline comparisons </span> can also allow\
+    them to compare different flight prices by modifying parameters of interest, thus helping optimize their travel plan.</p>"
     st.write(text, unsafe_allow_html=True)
     
     
