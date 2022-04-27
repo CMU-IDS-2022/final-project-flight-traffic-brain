@@ -581,5 +581,6 @@ options = [
 menu_selection = st.sidebar.selectbox(
     "What would you like to look at?",
     options
-
-menu_display(menu_selection)
+ 
+if __name__=="__main__":
+    menu_display(menu_selection)
