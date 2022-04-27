@@ -10,7 +10,7 @@ from utils import parse_time, parse_time_hms
 from vega_datasets import data
 
 
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 
 
 
