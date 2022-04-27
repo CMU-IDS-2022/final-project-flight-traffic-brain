@@ -148,7 +148,8 @@ def init_scatter_and_hist(flight_df, field, to_show, lookup_data):
             alt.Y("longitude", scale=alt.Scale(zero=False), title="Flight longitude"),
             # color = alt.condition(interval, alt.value("purple"), alt.value("grey")),
             color=alt.Color('is_delay', legend=alt.Legend(title="Flight delayed or not", orient='right')),
-            opacity = alt.condition(interval, alt.value(1), alt.value(0.2))
+            opacity = alt.condition(interval, alt.value(1), alt.value(0.2)),
+            tooltip = [alt.Tooltip('number:N', title='Flight number')]
         ).add_selection(interval)
         hist = alt.Chart(flight_df).mark_bar(tooltip=True
                 ).encode(
