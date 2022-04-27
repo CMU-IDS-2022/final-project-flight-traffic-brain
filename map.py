@@ -209,7 +209,7 @@ def create_map(flight_df, field, to_show):
 
     map_view = alt.layer(background, flight_from, airports_to,
                             airport_pts, flights_pts)
-    map_stat_view = alt.hconcat(scatter, hist).resolve_scale(color='independent')
-    map_airport = alt.vconcat(map_view, map_stat_view).resolve_scale(color='independent').configure_view(stroke=None)
+    map_stat_view = alt.hconcat(scatter, hist)#.resolve_scale(color='independent')
+    map_airport = alt.vconcat(map_view, map_stat_view)#.resolve_scale(color='independent').configure_view(stroke=None)
     return map_airport
 
