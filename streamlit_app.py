@@ -10,7 +10,7 @@ from utils import parse_time, parse_time_hms
 from vega_datasets import data
 
 
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 
 
 
@@ -101,7 +101,12 @@ def get_season(df, quarter):
 menu_selection =  st.sidebar.radio("Menu", ["Introduction","Flight Map", "Flight Delay Analysis", 
                                             "Flight Price Analysis"])
 if menu_selection == 'Introduction':
-    col1, col2, col3,col4 = st.columns([0.5,1,2,1])
+    #col1, col2, col3,col4 = st.columns([0.5,1,2,1])
+    #col2.image("image/flight-logo.jpg", width=150)
+    #col3.markdown("<h1 style='text-align: left; color: #072F5F;'>Flight Traffic Brain</h1>",
+    #        unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns([0.5,1,4])
     col2.image("image/flight-logo.jpg", width=150)
     col3.markdown("<h1 style='text-align: left; color: #072F5F;'>Flight Traffic Brain</h1>",
             unsafe_allow_html=True)
