@@ -12,6 +12,8 @@ from vega_datasets import data
 st.set_page_config(layout="wide")
 
 
+
+
 # Getting data ready, Refresh every hour (same data when user refreshes within an hour)
 @st.cache(ttl=60 * 60, suppress_st_warning=True)
 def get_AD_data():
