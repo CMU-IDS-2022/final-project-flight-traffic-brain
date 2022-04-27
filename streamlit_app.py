@@ -101,11 +101,11 @@ def get_season(df, quarter):
 menu_selection =  st.sidebar.radio("Menu", ["Introduction","Flight Map", "Flight Delay Analysis", 
                                             "Flight Price Analysis"])
 if menu_selection == 'Introduction':
-    cols = st.columns(3)
-    with cols[0]:
-        st.image("image/flight-logo.jpg", width=150)
+    cols = st.columns(4)
     with cols[1]:
-        st.markdown("<h2 style='text-align: center; color: black;'>Flight Traffic Brain</h2>",
+        st.image("image/flight-logo.jpg", width=150)
+    with cols[2]:
+        st.markdown("<h1 style='text-align: center; color: #072F5F;'>Flight Traffic Brain</h1>",
                 unsafe_allow_html=True)
     
        
