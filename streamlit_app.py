@@ -98,7 +98,7 @@ def get_season(df, quarter):
 
     return sub
 
-menu_selection =  st.sidebar.radio("Menu", ["Home","Flight Map", "Flight Delay Analysis", 
+menu_selection =  st.sidebar.radio("Menu", ["Introduction","Flight Map", "Flight Delay Analysis", 
                                             "Flight Price Analysis"])
 if menu_selection == 'Introduction':
     st.markdown("<h2 style='text-align: center; color: black;'>Flight Traffic Brain</h2>",
