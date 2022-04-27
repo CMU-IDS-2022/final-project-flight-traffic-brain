@@ -104,8 +104,8 @@ def get_season(df, quarter):
 
 menu_selection =  st.sidebar.radio("Menu", ["Flight Map", "Flight Delay Analysis", 
                                             "Flight Price Analysis"])
-if menu_selection == "Flight Map":
-
+#if menu_selection == "Flight Map":
+def flight_map():
     st.title("Real-time Flight Data Visualization")
     # ------------ Map starts ---------------------
 
@@ -180,8 +180,8 @@ if menu_selection == "Flight Map":
 # ------------ Flight time ends ---------------------
 
 
-elif menu_selection == "Flight Delay Analysis":
-
+#elif menu_selection == "Flight Delay Analysis":
+def flight_delay_analysis()
     # ------------ Delay Analysis starts ---------------------
 
 
@@ -333,8 +333,8 @@ elif menu_selection == "Flight Delay Analysis":
     # ------------ Delay Analysis ends ---------------------
 
 
-else:
-
+#else:
+def flight_price_analysis:
     # ------------------------ Flight price prediction starts ------------------------------    
     ## Price Prediction 
     st.title("Flight Price Analysis")
@@ -571,4 +571,26 @@ else:
 
     st.altair_chart(alt.vconcat(heat_bar, map))
 
+values = [
+    'Flight Map',
+    'Flight Delay Analysis',
+    'Flight Price Analysis'
+    ]
 
+selector = st.sidebar.selectbox(
+    "Content",
+    values
+)
+   
+def display_graph(selection):
+
+    if selection == "Flight Map":
+        flight_map()
+
+    elif selection == "Flight Delay Analysis":
+        flight_delay_analysis()
+
+    elif selection == 'Flight Price Analysis:
+        flight_price_analysis()
+
+display_graph(selector)        
