@@ -127,7 +127,7 @@ if menu_selection == 'Introduction':
     them to compare different flight prices by modifying parameters of interest, thus helping optimize their travel plan.</p>"
     st.write(text, unsafe_allow_html=True)
     
-    text = "<br><br><br>This dashboard was created by [Tina Feng](shutingf@andrew.cmu.edu), [Silvia Gu](yunxing@andrew.cmu.edu), \
+    text = "<br><br><br>This project was created by [Tina Feng](shutingf@andrew.cmu.edu), [Silvia Gu](yunxing@andrew.cmu.edu), \
      [Zhiyuan Guo](zguo2@andrew.cmu.edu) and [Anita Sun](ningjins@andrew.cmu.edu) for the [Interactive Data Science](https://dig.cmu.edu/ids2022) course at\
       [Carnegie Mellon University](https://www.cmu.edu)"
     st.write(text, unsafe_allow_html=True)
