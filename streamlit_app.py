@@ -105,7 +105,7 @@ if menu_selection == 'Introduction':
     with cols[1]:
         st.image("image/flight-logo.jpg", width=150)
     with cols[2]:
-        st.markdown("<h1 style='text-align: center; color: #072F5F;'>Flight Traffic Brain</h1>",
+        st.markdown("<h1 style='text-align: left; color: #072F5F;'>Flight Traffic Brain</h1>",
                 unsafe_allow_html=True)
     
        
