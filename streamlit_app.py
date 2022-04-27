@@ -614,4 +614,4 @@ else:
         against historical price distribution.\
         The second part presents a table of customized historical flights of interest. \
         The third part displays the historical average flight price by route and airline company.\
-        The last part...")
+        The last part shows the available destination on the map and other information based on a chosen origin. ")
