@@ -111,6 +111,10 @@ if menu_selection == 'Introduction':
     traffic and passengers make wiser decisions about airline flights. </p>"
     st.write(text, unsafe_allow_html=True)
     
+    cols = st.columns(2)
+    with cols[1]:
+        st.image("image/air-travel3.png", width=250)
+    
 
 
 elif menu_selection == "Flight Map":
