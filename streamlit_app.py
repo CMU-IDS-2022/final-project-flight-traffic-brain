@@ -100,9 +100,18 @@ def get_season(df, quarter):
 
 menu_selection =  st.sidebar.radio("Menu", ["Home","Flight Map", "Flight Delay Analysis", 
                                             "Flight Price Analysis"])
-if menu_selection == 'Home':
-    st.markdown("<h2 style='text-align: center; color: black;'>Home Page</h2>",
+if menu_selection == 'Introduction':
+    st.markdown("<h2 style='text-align: center; color: black;'>Flight Traffic Brain</h2>",
                 unsafe_allow_html=True)
+    text = "<p style='font-size:18px'>Nowadays, air traffic control has become a complicated task as there are\
+    more and more flights and airlines. There has also been rising cases of flight delays possibly due to poor\
+    management and massive volume of traffic. While air traffic is important to manage from the perspective of\
+    airports and airlines, flight prices are crucial for customers who usually make decisions of their travel\
+    plans based on them. In this project we hope to help airports better manage airlines and control airline\
+    traffic and passengers make wiser decisions about airline flights. </p>"
+    st.write(text, unsafe_allow_html=True)
+    
+
 
 elif menu_selection == "Flight Map":
 
