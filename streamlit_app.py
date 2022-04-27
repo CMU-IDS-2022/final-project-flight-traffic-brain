@@ -593,4 +593,5 @@ def display_graph(selection):
     elif selection == "Flight Price Analysis":
         flight_price_analysis()
 
-display_graph(selector)        
+if __name__=="__main__":
+    display_graph(selector)        
