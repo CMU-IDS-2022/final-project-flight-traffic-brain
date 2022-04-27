@@ -2,8 +2,6 @@ from FlightRadar24.api import FlightRadar24API
 import pandas as pd
 import streamlit as st
 
-import time
-
 
 st_title = st.empty()
 st_progress_bar = st.empty()
@@ -75,6 +73,17 @@ class AirData:
 
         for fid in tqdm(flights_ids, title="Fetching new data"):
             detail = self.get_flight_details(fid)
+            if type(detail) != dict: # errorenous return value: bytes class
+                scheduled_depart.append(None)
+                scheduled_arrive.append(None)
+                real_depart.append(None)
+                real_arrive.append(None)
+                estimated_depart.append(None)
+                estimated_arrive.append(None)
+                eta.append(None)
+                delayed.append(None)
+                continue
+
             time_info = detail['time']
             
             scheduled_depart.append(time_info['scheduled']['departure'])
@@ -103,7 +112,7 @@ class AirData:
         flights_df['estimated_arrive'] = estimated_arrive
         flights_df['eta'] = eta
         flights_df['is_delay'] = delayed
-        
+
         st_title.empty()
         st_progress_bar.empty()
 
