@@ -120,7 +120,7 @@ if menu_selection == 'Introduction':
     traffic and passengers make wiser decisions about airline flights.</p>" 
     st.write(text, unsafe_allow_html=True)
     
-    text = "<p style='font-size:18px'>A <span style='color: #1167b1'> real-time map </span> of flights with interactive information such as speed and altitude can help the specialists\
+    text = "<p style='font-size:18px'>A <span style='color: #1167b1'> real-time map of flights </span> with interactive information such as speed and altitude can help the specialists\
     to make better decisions. Meanwhile, an <span style='color: #1167b1'> interactive network graph </span> that shows the connections between airports and\
     flights can also improve the handling of dependencies among the traffic. A <span style='color: #1167b1'> data visualization section of delay time </span>\
     can also enable users to analyze different flights in real time and in more detail. By filtering the flight according to their\
