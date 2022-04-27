@@ -9,6 +9,11 @@ from airdata import AirData
 from utils import parse_time, parse_time_hms
 from vega_datasets import data
 
+
+st.set_page_config(layout="wide")
+
+
+
 # Getting data ready, Refresh every hour (same data when user refreshes within an hour)
 @st.cache(ttl=60 * 60, suppress_st_warning=True)
 def get_AD_data():
@@ -93,9 +98,13 @@ def get_season(df, quarter):
 
     return sub
 
-menu_selection =  st.sidebar.radio("Menu", ["Flight Map", "Flight Delay Analysis", 
+menu_selection =  st.sidebar.radio("Menu", ["Home","Flight Map", "Flight Delay Analysis", 
                                             "Flight Price Analysis"])
-if menu_selection == "Flight Map":
+if menu_selection == 'Home':
+    st.markdown("<h2 style='text-align: center; color: black;'>Home Page</h2>",
+                unsafe_allow_html=True)
+
+elif menu_selection == "Flight Map":
 
     st.title("Real-time Flight Data Visualization")
     # ------------ Map starts ---------------------
