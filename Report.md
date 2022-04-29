@@ -161,7 +161,10 @@ Among all features, numerical features like distance of miles, number of tickets
 
 During the experimentation of the flight price prediction tool, we find that in some cases, the predicted price does not fall in the 80% prediction interval. We believe the reason is that rather than hard coding and implementing the prediction interval formula, we utilize the loss=”quantile” feature in the sklearn GradientBoostingRegressor algorithm by specifying different value of alpha, by which the lower bound, predicted value, and upper bound are generated separately though using the same training data. This phenomenon further reinforces the degree of uncertainty in the flight price prediction task that we would like to convey to users who will use this prediction tool.
 
-We observed the seasonal trend of price. The overall flight ticket price is significantly higher in quarter 2, which might be caused by people’s high willingness in traveling. At the state level, both the number and price of flights tend to be higher among popular travel states like Hawaii. For different airline companies, the average price of small companies like Spirit Airline is lower, while the variance of price is higher of large companies like American Airline.
+We observed the seasonal trend of price. The overall flight ticket price is significantly higher in quarter 2, which might be caused by people’s high willingness in traveling. At the state level, both the number and price of flights tend to be higher among popular travel states like Hawaii.
+![pricemap](report_picture/pricemap.png)
+For different airline companies, the average price of small companies like Spirit Airline is lower, while the variance of price is higher of large companies like American Airline.
+![boxplot](report_picture/boxplot.png)
 
 
 ## Future Work
